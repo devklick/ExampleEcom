@@ -1,4 +1,4 @@
-namespace ExampleEcom.Api.Entities
+namespace ExampleEcom.Repository.Entities
 {
     public class Product
     {

@@ -1,9 +1,9 @@
 using Microsoft.EntityFrameworkCore;
-using ExampleEcom.Api.Entities;
+using ExampleEcom.Repository.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
-namespace ExampleEcom.Api.Context;
+namespace ExampleEcom.Repository.Context;
 public class AppDbContext : IdentityDbContext<IdentityUser>
 {
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)

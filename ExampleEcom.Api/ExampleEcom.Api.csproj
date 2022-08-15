@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ExampleEcom.Repository\ExampleEcom.Repository.csproj" />
+    <ProjectReference Include="..\ExampleEcom.Domain\ExampleEcom.Domain.csproj" />
   </ItemGroup>
 
 </Project>

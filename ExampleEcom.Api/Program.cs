@@ -1,5 +1,5 @@
-using ExampleEcom.Repository.Configuration;
-using ExampleEcom.Repository.Context;
+using ExampleEcom.Domain.Configuration;
+using ExampleEcom.Domain.Context;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 

@@ -1,4 +1,4 @@
-namespace ExampleEcom.Repository.Entities
+namespace ExampleEcom.Domain.Models
 {
     public class Product
     {

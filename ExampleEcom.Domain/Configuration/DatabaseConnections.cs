@@ -1,4 +1,4 @@
-namespace ExampleEcom.Repository.Configuration
+namespace ExampleEcom.Domain.Configuration
 {
     public class DatabaseConnections : Dictionary<string, DatabaseConnection>
     {

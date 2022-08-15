@@ -5,7 +5,9 @@ VisualStudioVersion = 16.0.30114.105
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExampleEcom.Api", "ExampleEcom.Api\ExampleEcom.Api.csproj", "{5D600D00-0120-4303-92CC-C761E73FB999}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExampleEcom.Repository", "ExampleEcom.Repository\ExampleEcom.Repository.csproj", "{C970F6D0-2FC1-4C33-8F37-3CA515C6F405}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExampleEcom.Domain", "ExampleEcom.Domain\ExampleEcom.Domain.csproj", "{C970F6D0-2FC1-4C33-8F37-3CA515C6F405}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExampleEcom.Infrastructure", "ExampleEcom.Infrastructure\ExampleEcom.Infrastructure.csproj", "{BAA08B8C-BA8E-4A3F-B043-CC42CFAF5F12}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -28,5 +30,9 @@ Global
 		{C970F6D0-2FC1-4C33-8F37-3CA515C6F405}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C970F6D0-2FC1-4C33-8F37-3CA515C6F405}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C970F6D0-2FC1-4C33-8F37-3CA515C6F405}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BAA08B8C-BA8E-4A3F-B043-CC42CFAF5F12}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BAA08B8C-BA8E-4A3F-B043-CC42CFAF5F12}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BAA08B8C-BA8E-4A3F-B043-CC42CFAF5F12}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BAA08B8C-BA8E-4A3F-B043-CC42CFAF5F12}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

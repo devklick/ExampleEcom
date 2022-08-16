@@ -1,8 +1,8 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace ExampleEcom.Api.Accounts.Requests
+namespace ExampleEcom.Api.Users.Requests
 {
-    public class CreateAccountRequest
+    public class CreateUserRequest
     {
         // TODO: Consider FluentValidation instead of DataAnnotations
         [Required, MinLength(6), MaxLength(64)]

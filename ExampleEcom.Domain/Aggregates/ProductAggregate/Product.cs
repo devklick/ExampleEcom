@@ -1,4 +1,4 @@
-namespace ExampleEcom.Domain.Models
+namespace ExampleEcom.Domain.Aggregates.ProductAggregate
 {
     public class Product
     {

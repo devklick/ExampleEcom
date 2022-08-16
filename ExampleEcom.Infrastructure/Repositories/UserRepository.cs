@@ -1,21 +1,23 @@
 using ExampleEcom.Domain.Aggregates.UserAggregates;
 using ExampleEcom.Domain.Context;
 using ExampleEcom.Domain.Repository;
+using Microsoft.AspNetCore.Identity;
 
 namespace ExampleEcom.Infrastructure.Users
 {
     public class UserRepository : IUserRepository
     {
-        private readonly IAppDbContext _context;
+        private readonly UserManager<User> _userManager;
 
-        public UserRepository(IAppDbContext context)
+        public UserRepository(UserManager<User> userManager)
         {
-            _context = context;
+            _userManager = userManager;
         }
 
-        public async Task<User> Create(User user)
+        public async Task<User> CreateUser(User user, string password)
         {
-            await _context.Users.AddAsync(user);
+            user.PasswordHash = _userManager.PasswordHasher.HashPassword(user, password);
+            await _userManager.CreateAsync(user);
             return user;
         }
     }

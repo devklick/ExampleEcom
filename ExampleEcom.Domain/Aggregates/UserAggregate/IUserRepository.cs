@@ -4,6 +4,6 @@ namespace ExampleEcom.Domain.Repository
 {
     public interface IUserRepository
     {
-        Task<User> Create(User user);
+        Task<User> CreateUser(User user, string password);
     }
 }

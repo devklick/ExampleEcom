@@ -1,7 +1,9 @@
 using System.Reflection;
 using ExampleEcom.Domain.Aggregates.UserAggregates;
 using ExampleEcom.Domain.Configuration;
+using ExampleEcom.Domain.Repository;
 using ExampleEcom.Infrastructure.Persistence;
+using ExampleEcom.Infrastructure.Users;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -29,6 +31,7 @@ public class Program
         AddSwagger(builder);
         AddAutoMapper(builder);
         AddMediatR(builder);
+        AddRepositories(builder);
 
         return builder;
     }
@@ -85,6 +88,11 @@ public class Program
     private static void AddAutoMapper(WebApplicationBuilder builder)
     {
         builder.Services.AddAutoMapper(typeof(Program));
+    }
+
+    private static void AddRepositories(WebApplicationBuilder builder)
+    {
+        builder.Services.AddScoped<IUserRepository, UserRepository>();
     }
 
     private static WebApplication AddMiddlewares(WebApplication app)

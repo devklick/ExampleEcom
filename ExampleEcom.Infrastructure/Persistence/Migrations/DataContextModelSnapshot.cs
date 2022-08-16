@@ -3,19 +3,17 @@ using System;
 using ExampleEcom.Domain.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace ExampleEcom.Domain.Migrations
+namespace ExampleEcom.Infrastructure.Persistence
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20220815182026_IdentityFramework")]
-    partial class IdentityFramework
+    partial class DataContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

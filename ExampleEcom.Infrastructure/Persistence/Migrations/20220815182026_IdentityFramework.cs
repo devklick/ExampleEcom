@@ -4,7 +4,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace ExampleEcom.Domain.Migrations
+namespace ExampleEcom.Infrastructure.Persistence
 {
     public partial class IdentityFramework : Migration
     {

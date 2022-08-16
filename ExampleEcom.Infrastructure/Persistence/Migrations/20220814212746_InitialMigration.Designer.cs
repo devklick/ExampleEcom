@@ -8,7 +8,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace ExampleEcom.Domain.Migrations
+namespace ExampleEcom.Infrastructure.Persistence
 {
     [DbContext(typeof(AppDbContext))]
     [Migration("20220814212746_InitialMigration")]

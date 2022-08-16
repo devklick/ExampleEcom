@@ -15,7 +15,8 @@ namespace ExampleEcom.Infrastructure.Users
 
         public async Task<User> Create(User user)
         {
-            throw new NotImplementedException();
+            await _context.Users.AddAsync(user);
+            return user;
         }
     }
 }

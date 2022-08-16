@@ -1,5 +1,8 @@
+using System.Reflection;
+using ExampleEcom.Domain.Aggregates.UserAggregates;
 using ExampleEcom.Domain.Configuration;
-using ExampleEcom.Domain.Context;
+using ExampleEcom.Infrastructure.Persistence;
+using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,36 +12,41 @@ public class Program
 {
     public static void Main(string[] args)
     {
-        var builder = WebApplication.CreateBuilder(args);
+        var app = CreateAppBuilder(args).Build();
+        AddMiddlewares(app);
+        app.Run();
+    }
 
-        // Add services to the container.
+    private static WebApplicationBuilder CreateAppBuilder(string[] args)
+    {
+        var builder = WebApplication.CreateBuilder(args);
 
         builder.Services.AddControllers();
 
         AddDbContext(builder);
         AddIdentity(builder);
+        AddAuthorization(builder);
+        AddSwagger(builder);
+        AddAutoMapper(builder);
+        AddMediatR(builder);
 
-        // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+        return builder;
+    }
+
+    private static void AddMediatR(WebApplicationBuilder builder)
+    {
+        builder.Services.AddMediatR(typeof(Program).GetTypeInfo().Assembly);
+    }
+
+    private static void AddAuthorization(WebApplicationBuilder builder)
+    {
+        builder.Services.AddAuthorization();
+    }
+
+    private static void AddSwagger(WebApplicationBuilder builder)
+    {
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
-
-        var app = builder.Build();
-
-        // Configure the HTTP request pipeline.
-        if (app.Environment.IsDevelopment())
-        {
-            app.UseSwagger();
-            app.UseSwaggerUI();
-        }
-
-        app.UseHttpsRedirection();
-
-        app.UseAuthorization();
-
-
-        app.MapControllers();
-
-        app.Run();
     }
 
     private static void AddDbContext(WebApplicationBuilder builder)
@@ -59,7 +67,7 @@ public class Program
 
     private static void AddIdentity(WebApplicationBuilder builder)
     {
-        builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
+        builder.Services.AddIdentity<User, IdentityRole>(options =>
         {
             options.SignIn.RequireConfirmedAccount = true;
             options.Password.RequiredLength = 9;
@@ -69,6 +77,31 @@ public class Program
             options.Password.RequireNonAlphanumeric = true;
             options.User.RequireUniqueEmail = true;
             options.SignIn.RequireConfirmedAccount = true;
-        }).AddEntityFrameworkStores<AppDbContext>();
+        })
+        .AddRoles<IdentityRole>()
+        .AddEntityFrameworkStores<AppDbContext>();
+    }
+
+    private static void AddAutoMapper(WebApplicationBuilder builder)
+    {
+        builder.Services.AddAutoMapper(typeof(Program));
+    }
+
+    private static WebApplication AddMiddlewares(WebApplication app)
+    {
+        // Configure the HTTP request pipeline.
+        if (app.Environment.IsDevelopment())
+        {
+            app.UseSwagger();
+            app.UseSwaggerUI();
+        }
+
+        app.UseHttpsRedirection();
+
+        app.UseAuthorization();
+
+        app.MapControllers();
+
+        return app;
     }
 }

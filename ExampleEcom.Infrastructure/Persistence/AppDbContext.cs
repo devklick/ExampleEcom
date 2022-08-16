@@ -1,15 +1,14 @@
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using ExampleEcom.Domain.Aggregates.UserAggregates;
 using ExampleEcom.Domain.Aggregates.ProductAggregate;
+using ExampleEcom.Domain.Context;
 
-namespace ExampleEcom.Domain.Context;
-public class AppDbContext : IdentityDbContext<IdentityUser>, IAppDbContext
+namespace ExampleEcom.Infrastructure.Persistence;
+public class AppDbContext : IdentityDbContext<User>, IAppDbContext
 {
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
     { }
 
     public DbSet<Product> Products => Set<Product>();
-    public DbSet<User> Users => Set<User>();
 }

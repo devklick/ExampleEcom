@@ -12,6 +12,7 @@ public class AppDbContext : IdentityDbContext<User>, IAppDbContext
     { }
 
     public DbSet<Product> Products => Set<Product>();
+    public DbSet<ProductCategory> ProductCategories => Set<ProductCategory>();
 
     protected override void OnModelCreating(ModelBuilder builder)
     {

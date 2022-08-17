@@ -10,6 +10,11 @@ namespace ExampleEcom.Infrastructure.Persistence.Extensions
             foreach (var entity in modelBuilder.Model.GetEntityTypes())
             {
                 entity.SetTableName(entity.DisplayName().ToSnakeCase());
+
+                foreach (var property in entity.GetProperties())
+                {
+                    property.SetColumnName(property.Name.ToSnakeCase());
+                }
             }
         }
     }

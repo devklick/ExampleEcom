@@ -3,13 +3,22 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ExampleEcom.Domain.Aggregates.ProductAggregate
 {
-    [Table("product")]
     public class Product
     {
+        [Required]
         public int Id { get; set; }
-        public string Category { get; set; }
-        public string DisplayName { get; set; }
-        public string Description { get; set; }
-        public ProductPrice Price { get; set; }
+
+        [Required]
+        public int CategoryId { get; set; }
+
+        [Required, StringLength(256)]
+        public string DisplayName { get; set; } = default!;
+
+        [Required, DataType(DataType.MultilineText)]
+        public string Description { get; set; } = default!;
+
+        public List<ProductPrice> Prices { get; set; } = default!;
+
+        public ProductCategory Category { get; set; } = default!;
     }
 }

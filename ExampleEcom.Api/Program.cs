@@ -64,7 +64,6 @@ public class Program
         builder.Services.AddDbContext<AppDbContext>(options =>
         {
             options.UseNpgsql(defaultConnection);
-            options.UseSnakeCaseNamingConvention();
         });
     }
 

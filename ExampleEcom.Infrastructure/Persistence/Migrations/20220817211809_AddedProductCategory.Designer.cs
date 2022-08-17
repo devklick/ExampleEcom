@@ -3,6 +3,7 @@ using System;
 using ExampleEcom.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ExampleEcom.Infrastructure.Persistence
 {
     [DbContext(typeof(AppDbContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20220817211809_AddedProductCategory")]
+    partial class AddedProductCategory
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -26,42 +28,35 @@ namespace ExampleEcom.Infrastructure.Persistence
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("id");
+                        .HasColumnType("integer");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Code")
                         .IsRequired()
                         .HasMaxLength(3)
-                        .HasColumnType("character varying(3)")
-                        .HasColumnName("code");
+                        .HasColumnType("character varying(3)");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(64)
-                        .HasColumnType("character varying(64)")
-                        .HasColumnName("name");
+                        .HasColumnType("character varying(64)");
 
                     b.Property<string>("Number")
                         .IsRequired()
                         .HasMaxLength(3)
-                        .HasColumnType("character varying(3)")
-                        .HasColumnName("number");
+                        .HasColumnType("character varying(3)");
 
                     b.Property<bool>("SpacedSymbol")
-                        .HasColumnType("boolean")
-                        .HasColumnName("spaced_symbol");
+                        .HasColumnType("boolean");
 
                     b.Property<string>("Symbol")
                         .IsRequired()
                         .HasMaxLength(3)
-                        .HasColumnType("character varying(3)")
-                        .HasColumnName("symbol");
+                        .HasColumnType("character varying(3)");
 
                     b.Property<int>("SymbolOrientation")
-                        .HasColumnType("integer")
-                        .HasColumnName("symbol_orientation");
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -72,25 +67,21 @@ namespace ExampleEcom.Infrastructure.Persistence
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("id");
+                        .HasColumnType("integer");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<int>("CategoryId")
-                        .HasColumnType("integer")
-                        .HasColumnName("category_id");
+                        .HasColumnType("integer");
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("description");
+                        .HasColumnType("text");
 
                     b.Property<string>("DisplayName")
                         .IsRequired()
                         .HasMaxLength(256)
-                        .HasColumnType("character varying(256)")
-                        .HasColumnName("display_name");
+                        .HasColumnType("character varying(256)");
 
                     b.HasKey("Id");
 
@@ -103,20 +94,17 @@ namespace ExampleEcom.Infrastructure.Persistence
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("id");
+                        .HasColumnType("integer");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(64)
-                        .HasColumnType("character varying(64)")
-                        .HasColumnName("name");
+                        .HasColumnType("character varying(64)");
 
                     b.Property<int?>("ParentCategoryId")
-                        .HasColumnType("integer")
-                        .HasColumnName("parent_category_id");
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -129,22 +117,18 @@ namespace ExampleEcom.Infrastructure.Persistence
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("id");
+                        .HasColumnType("integer");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<int>("CurrencyId")
-                        .HasColumnType("integer")
-                        .HasColumnName("currency_id");
+                        .HasColumnType("integer");
 
                     b.Property<int>("ProductId")
-                        .HasColumnType("integer")
-                        .HasColumnName("product_id");
+                        .HasColumnType("integer");
 
                     b.Property<double>("Value")
-                        .HasColumnType("double precision")
-                        .HasColumnName("value");
+                        .HasColumnType("double precision");
 
                     b.HasKey("Id");
 
@@ -158,81 +142,64 @@ namespace ExampleEcom.Infrastructure.Persistence
             modelBuilder.Entity("ExampleEcom.Domain.Aggregates.UserAggregates.User", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("text")
-                        .HasColumnName("id");
+                        .HasColumnType("text");
 
                     b.Property<int>("AccessFailedCount")
-                        .HasColumnType("integer")
-                        .HasColumnName("access_failed_count");
+                        .HasColumnType("integer");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
-                        .HasColumnType("text")
-                        .HasColumnName("concurrency_stamp");
+                        .HasColumnType("text");
 
                     b.Property<string>("Email")
                         .HasMaxLength(256)
-                        .HasColumnType("character varying(256)")
-                        .HasColumnName("email");
+                        .HasColumnType("character varying(256)");
 
                     b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("boolean")
-                        .HasColumnName("email_confirmed");
+                        .HasColumnType("boolean");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasMaxLength(64)
-                        .HasColumnType("character varying(64)")
-                        .HasColumnName("first_name");
+                        .HasColumnType("character varying(64)");
 
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasMaxLength(64)
-                        .HasColumnType("character varying(64)")
-                        .HasColumnName("last_name");
+                        .HasColumnType("character varying(64)");
 
                     b.Property<bool>("LockoutEnabled")
-                        .HasColumnType("boolean")
-                        .HasColumnName("lockout_enabled");
+                        .HasColumnType("boolean");
 
                     b.Property<DateTimeOffset?>("LockoutEnd")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("lockout_end");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256)
-                        .HasColumnType("character varying(256)")
-                        .HasColumnName("normalized_email");
+                        .HasColumnType("character varying(256)");
 
                     b.Property<string>("NormalizedUserName")
                         .HasMaxLength(256)
-                        .HasColumnType("character varying(256)")
-                        .HasColumnName("normalized_user_name");
+                        .HasColumnType("character varying(256)");
 
                     b.Property<string>("PasswordHash")
-                        .HasColumnType("text")
-                        .HasColumnName("password_hash");
+                        .HasColumnType("text");
 
                     b.Property<string>("PhoneNumber")
-                        .HasColumnType("text")
-                        .HasColumnName("phone_number");
+                        .HasColumnType("text");
 
                     b.Property<bool>("PhoneNumberConfirmed")
-                        .HasColumnType("boolean")
-                        .HasColumnName("phone_number_confirmed");
+                        .HasColumnType("boolean");
 
                     b.Property<string>("SecurityStamp")
-                        .HasColumnType("text")
-                        .HasColumnName("security_stamp");
+                        .HasColumnType("text");
 
                     b.Property<bool>("TwoFactorEnabled")
-                        .HasColumnType("boolean")
-                        .HasColumnName("two_factor_enabled");
+                        .HasColumnType("boolean");
 
                     b.Property<string>("UserName")
                         .HasMaxLength(256)
-                        .HasColumnType("character varying(256)")
-                        .HasColumnName("user_name");
+                        .HasColumnType("character varying(256)");
 
                     b.HasKey("Id");
 
@@ -249,23 +216,19 @@ namespace ExampleEcom.Infrastructure.Persistence
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("text")
-                        .HasColumnName("id");
+                        .HasColumnType("text");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
-                        .HasColumnType("text")
-                        .HasColumnName("concurrency_stamp");
+                        .HasColumnType("text");
 
                     b.Property<string>("Name")
                         .HasMaxLength(256)
-                        .HasColumnType("character varying(256)")
-                        .HasColumnName("name");
+                        .HasColumnType("character varying(256)");
 
                     b.Property<string>("NormalizedName")
                         .HasMaxLength(256)
-                        .HasColumnType("character varying(256)")
-                        .HasColumnName("normalized_name");
+                        .HasColumnType("character varying(256)");
 
                     b.HasKey("Id");
 
@@ -280,23 +243,19 @@ namespace ExampleEcom.Infrastructure.Persistence
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("id");
+                        .HasColumnType("integer");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("ClaimType")
-                        .HasColumnType("text")
-                        .HasColumnName("claim_type");
+                        .HasColumnType("text");
 
                     b.Property<string>("ClaimValue")
-                        .HasColumnType("text")
-                        .HasColumnName("claim_value");
+                        .HasColumnType("text");
 
                     b.Property<string>("RoleId")
                         .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("role_id");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -309,23 +268,19 @@ namespace ExampleEcom.Infrastructure.Persistence
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("id");
+                        .HasColumnType("integer");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("ClaimType")
-                        .HasColumnType("text")
-                        .HasColumnName("claim_type");
+                        .HasColumnType("text");
 
                     b.Property<string>("ClaimValue")
-                        .HasColumnType("text")
-                        .HasColumnName("claim_value");
+                        .HasColumnType("text");
 
                     b.Property<string>("UserId")
                         .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("user_id");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -337,21 +292,17 @@ namespace ExampleEcom.Infrastructure.Persistence
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("text")
-                        .HasColumnName("login_provider");
+                        .HasColumnType("text");
 
                     b.Property<string>("ProviderKey")
-                        .HasColumnType("text")
-                        .HasColumnName("provider_key");
+                        .HasColumnType("text");
 
                     b.Property<string>("ProviderDisplayName")
-                        .HasColumnType("text")
-                        .HasColumnName("provider_display_name");
+                        .HasColumnType("text");
 
                     b.Property<string>("UserId")
                         .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("user_id");
+                        .HasColumnType("text");
 
                     b.HasKey("LoginProvider", "ProviderKey");
 
@@ -363,12 +314,10 @@ namespace ExampleEcom.Infrastructure.Persistence
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
                 {
                     b.Property<string>("UserId")
-                        .HasColumnType("text")
-                        .HasColumnName("user_id");
+                        .HasColumnType("text");
 
                     b.Property<string>("RoleId")
-                        .HasColumnType("text")
-                        .HasColumnName("role_id");
+                        .HasColumnType("text");
 
                     b.HasKey("UserId", "RoleId");
 
@@ -380,20 +329,16 @@ namespace ExampleEcom.Infrastructure.Persistence
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
                     b.Property<string>("UserId")
-                        .HasColumnType("text")
-                        .HasColumnName("user_id");
+                        .HasColumnType("text");
 
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("text")
-                        .HasColumnName("login_provider");
+                        .HasColumnType("text");
 
                     b.Property<string>("Name")
-                        .HasColumnType("text")
-                        .HasColumnName("name");
+                        .HasColumnType("text");
 
                     b.Property<string>("Value")
-                        .HasColumnType("text")
-                        .HasColumnName("value");
+                        .HasColumnType("text");
 
                     b.HasKey("UserId", "LoginProvider", "Name");
 

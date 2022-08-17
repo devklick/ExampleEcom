@@ -11,10 +11,10 @@ namespace ExampleEcom.Domain.Aggregates.LocationAggregates
         public string? BuildingNumber { get; set; }
 
         [Required, StringLength(128)]
-        public string Street { get; set; }
+        public string Street { get; set; } = default!;
 
         [Required, StringLength(128)]
-        public string City { get; set; }
+        public string City { get; set; } = default!;
 
         [StringLength(64)]
         public string? Region { get; set; }
@@ -23,6 +23,6 @@ namespace ExampleEcom.Domain.Aggregates.LocationAggregates
         public string? Country { get; set; }
 
         [Required, StringLength(8)]
-        public string PostCode { get; set; }
+        public string PostCode { get; set; } = default!;
     }
 }

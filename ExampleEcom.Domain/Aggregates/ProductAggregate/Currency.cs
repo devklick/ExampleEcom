@@ -3,26 +3,25 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ExampleEcom.Domain.Aggregates.ProductAggregate
 {
-    [Table("currency")]
     public class Currency
     {
         [Required]
         public int Id { get; set; }
 
         [Required, StringLength(64)]
-        public string Name { get; set; }
+        public string Name { get; set; } = default!;
 
         [Required, MinLength(3), MaxLength(3)]
-        public string Code { get; set; }
+        public string Code { get; set; } = default!;
 
         [Required, MinLength(3), MaxLength(3)]
-        public string Number { get; set; }
+        public string Number { get; set; } = default!;
 
         [Required, StringLength(3)]
-        public string Symbol { get; set; }
+        public string Symbol { get; set; } = default!;
 
         [Required]
-        public CurrencySymbolOrientation MyProperty { get; set; }
+        public CurrencySymbolOrientation SymbolOrientation { get; set; }
 
         [Required]
         public bool SpacedSymbol { get; set; }

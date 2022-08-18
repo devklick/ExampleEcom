@@ -1,6 +1,17 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { createUserRequestSchema } from "../../schemas/user-schemas";
+import { HTMLInputTypeAttribute } from "react";
+
+import {
+  CreateUserRequest,
+  createUserRequestSchema,
+} from "../../schemas/user-schemas";
+import FormField from "../form-field/form-field";
+import ContentContainer from "../content-container/content-container";
+import userService from "../../services/ecom-user-api-service";
+import Form from "../form/form";
+
+import styles from "./user-registration.module.scss";
 
 export interface UserRegistrationProps {}
 
@@ -13,52 +24,49 @@ const UserRegistration: React.FC<UserRegistrationProps> = () => {
     resolver: zodResolver(createUserRequestSchema),
   });
 
+  const handleSubmitRegistration = async (request: CreateUserRequest) => {
+    const result = await userService.createUser(request);
+    // TODO: Check result and redirect
+  };
+
+  const formField = (
+    fieldName: keyof CreateUserRequest,
+    type: HTMLInputTypeAttribute = "text"
+  ) => (
+    <FormField<CreateUserRequest>
+      fieldName={fieldName}
+      type={type}
+      register={register}
+      errors={errors}
+    />
+  );
+
   return (
-    <div>
-      <h1>User Registration</h1>
-      <form onSubmit={handleSubmit((d) => console.log(d))}>
-        <input
-          {...register("firstName")}
-          aria-invalid={errors.firstName ? "true" : "false"}
-        />
-        {errors.firstName?.message && (
-          <p>{errors.firstName?.message?.toString()}</p>
-        )}
+    <div className={styles["user-registration"]}>
+      <ContentContainer>
+        <h1 className={styles["user-registration-content__header"]}>
+          User Registration
+        </h1>
 
-        <input
-          {...register("lastName")}
-          aria-invalid={errors.lastName ? "true" : "false"}
-        />
-        {errors.lastName?.message && (
-          <p>{errors.lastName?.message?.toString()}</p>
-        )}
-
-        <input
-          {...register("userName")}
-          aria-invalid={errors.userName ? "true" : "false"}
-        />
-        {errors.userName?.message && (
-          <p>{errors.userName?.message?.toString()}</p>
-        )}
-
-        <input
-          type={"email"}
-          {...register("email")}
-          aria-invalid={errors.email ? "true" : "false"}
-        />
-        {errors.email?.message && <p>{errors.email?.message?.toString()}</p>}
-
-        <input
-          type={"password"}
-          {...register("password")}
-          aria-invalid={errors.password ? "true" : "false"}
-        />
-        {errors.password?.message && (
-          <p>{errors.password?.message?.toString()}</p>
-        )}
-
-        <input type="submit" />
-      </form>
+        <Form
+          formClassName={styles["user-registration-content__form"]}
+          submitButtonClassName={
+            styles["user-registration-content__form-submit"]
+          }
+          submitButtonText="Submit registration"
+          onSubmit={handleSubmit(
+            async (d) => await handleSubmitRegistration(d as CreateUserRequest)
+          )}
+        >
+          <div className={styles["user-registration-content__form-fields"]}>
+            {formField("firstName")}
+            {formField("lastName")}
+            {formField("userName")}
+            {formField("email", "email")}
+            {formField("password", "password")}
+          </div>
+        </Form>
+      </ContentContainer>
     </div>
   );
 };

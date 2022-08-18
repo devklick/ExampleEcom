@@ -79,6 +79,7 @@ public class Program
             options.Password.RequireNonAlphanumeric = true;
             options.User.RequireUniqueEmail = true;
             options.SignIn.RequireConfirmedAccount = true;
+            options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_";
         })
         .AddRoles<IdentityRole>()
         .AddEntityFrameworkStores<AppDbContext>();

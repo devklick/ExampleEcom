@@ -1,0 +1,15 @@
+.content-container {
+    margin-top: 30px;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    flex-direction: column;
+    border: 1px solid #637b94;
+    border-radius: 5px;
+    padding: 10px;
+
+    &-regular {
+        @extend .content-container;
+        width: 300px;
+    }
+}

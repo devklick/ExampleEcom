@@ -10,7 +10,7 @@ const AppHeader: React.FC<AppHeaderProps> = (props) => {
           <div className={styles["app-header__content__title"]}>Ex-Ecom</div>
         </div>
       </div>
-      <NavBar></NavBar>
+      <NavBar />
     </>
   );
 };

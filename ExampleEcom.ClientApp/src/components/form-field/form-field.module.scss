@@ -1,0 +1,18 @@
+.form-field {
+    display: flex;
+    flex-direction: column;
+
+    &__label {
+        text-align: left;
+    }
+
+    &__input {
+        padding: 6px;
+        border: 1px solid grey;
+        border-radius: 4px;
+        &-errors {
+            color: red;
+            text-align: left;
+        }
+    }
+}

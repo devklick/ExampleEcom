@@ -17,7 +17,7 @@ namespace ExampleEcom.Infrastructure.Users
         public async Task<User> CreateUser(User user, string password)
         {
             user.PasswordHash = _userManager.PasswordHasher.HashPassword(user, password);
-            await _userManager.CreateAsync(user);
+            var result = await _userManager.CreateAsync(user);
             return user;
         }
     }

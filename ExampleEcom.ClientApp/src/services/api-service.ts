@@ -35,10 +35,15 @@ const executeRequest = async <TBody>(
     url: buildUrl(options.endpoint, options.queryParameters),
     data: options.body,
     headers: options.headers,
+    responseType: "json",
   };
   const response = await proxy.request(requestConfig);
+
+  console.log(response);
+
   const status = getApiResponseStatus(response.status);
   const body = getApiResponseBody<TBody>(response.data);
+
   return {
     status,
     body,
@@ -60,8 +65,7 @@ const getApiResponseStatus = (status: number): ApiResponseStatus => {
   }
 };
 
-const getApiResponseBody = <TBody>(data: any) =>
-  data ? (JSON.parse(data) as TBody) : null;
+const getApiResponseBody = <TBody>(data: any) => data as TBody;
 
 const buildUrl = (endpoint?: string, urlParams?: object) =>
   `${endpoint}${buildQueryString(urlParams)}`;

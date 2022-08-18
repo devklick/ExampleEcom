@@ -4,6 +4,12 @@ namespace ExampleEcom.Api.Users.Requests
 {
     public class CreateUserRequest
     {
+        [Required, MinLength(1), MaxLength(64)]
+        public string FirstName { get; set; } = default!;
+
+        [Required, MinLength(1), MaxLength(64)]
+        public string LastName { get; set; } = default!;
+
         // TODO: Consider FluentValidation instead of DataAnnotations
         [Required, MinLength(6), MaxLength(64)]
         public string UserName { get; set; } = default!;

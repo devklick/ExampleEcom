@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { HTMLInputTypeAttribute } from "react";
+import { HTMLInputTypeAttribute, useState } from "react";
 
 import {
   CreateUserRequest,
@@ -12,10 +12,13 @@ import userService from "../../services/ecom-user-api-service";
 import Form from "../form/form";
 
 import styles from "./user-registration.module.scss";
+import { ApiResponseErrors } from "../../schemas/base-api-schema";
 
 export interface UserRegistrationProps {}
 
 const UserRegistration: React.FC<UserRegistrationProps> = () => {
+  const [apiErrors, setErrors] = useState<ApiResponseErrors>({});
+
   const {
     register,
     handleSubmit,
@@ -26,7 +29,7 @@ const UserRegistration: React.FC<UserRegistrationProps> = () => {
 
   const handleSubmitRegistration = async (request: CreateUserRequest) => {
     const result = await userService.createUser(request);
-    // TODO: Check result and redirect
+    if (result.errors) setErrors(result.errors);
   };
 
   const formField = (
@@ -37,7 +40,8 @@ const UserRegistration: React.FC<UserRegistrationProps> = () => {
       fieldName={fieldName}
       type={type}
       register={register}
-      errors={errors}
+      formErrors={errors}
+      apiErrors={apiErrors}
     />
   );
 

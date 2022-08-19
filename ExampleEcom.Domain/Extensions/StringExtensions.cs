@@ -1,9 +1,12 @@
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace ExampleEcom.Domain.Extensions
 {
     public static class StringExtensions
     {
+
+        private static readonly Regex _toCamelCaseRegex = new Regex(@"([A-Z])([A-Z]+|[a-z0-9_]+)($|[A-Z]\w*)");
 
         /// <summary>
         /// Convert string to snake_case. 
@@ -37,6 +40,14 @@ namespace ExampleEcom.Domain.Extensions
                 }
             }
             return sb.ToString();
+        }
+
+        public static string ToCamelCase(this string text)
+        {
+            return _toCamelCaseRegex.Replace(text, m =>
+            {
+                return m.Groups[1].Value.ToLower() + m.Groups[2].Value.ToLower() + m.Groups[3].Value;
+            });
         }
     }
 }

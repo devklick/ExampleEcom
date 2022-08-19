@@ -1,10 +1,5 @@
 import { AxiosInstance, AxiosRequestConfig, Method } from "axios";
-
-type ApiResponseStatus = "success" | "client-error" | "server-error";
-type ApiResponse<TBody> = {
-  status: ApiResponseStatus;
-  body: TBody | null;
-};
+import { ApiResponse, ApiResponseStatusType } from "../schemas/base-api-schema";
 
 type PostOptions = {
   endpoint?: string;
@@ -25,11 +20,11 @@ const post = async <TResponseBody>(
   });
 };
 
-const executeRequest = async <TBody>(
+const executeRequest = async <TResponse>(
   proxy: AxiosInstance,
   method: Method,
   options: RequestOptions
-): Promise<ApiResponse<TBody>> => {
+): Promise<ApiResponse<TResponse>> => {
   const requestConfig: AxiosRequestConfig = {
     method,
     url: buildUrl(options.endpoint, options.queryParameters),
@@ -37,20 +32,19 @@ const executeRequest = async <TBody>(
     headers: options.headers,
     responseType: "json",
   };
-  const response = await proxy.request(requestConfig);
+  const response = await proxy.request<ApiResponse<TResponse>>(requestConfig);
 
   console.log(response);
 
-  const status = getApiResponseStatus(response.status);
-  const body = getApiResponseBody<TBody>(response.data);
+  const statusType = getApiResponseStatus(response.status);
 
   return {
-    status,
-    body,
+    ...response.data,
+    statusType,
   };
 };
 
-const getApiResponseStatus = (status: number): ApiResponseStatus => {
+const getApiResponseStatus = (status: number): ApiResponseStatusType => {
   const statusString = status.toString();
   switch (statusString.charAt(0)) {
     case "2":
@@ -64,8 +58,6 @@ const getApiResponseStatus = (status: number): ApiResponseStatus => {
       return "server-error";
   }
 };
-
-const getApiResponseBody = <TBody>(data: any) => data as TBody;
 
 const buildUrl = (endpoint?: string, urlParams?: object) =>
   `${endpoint}${buildQueryString(urlParams)}`;

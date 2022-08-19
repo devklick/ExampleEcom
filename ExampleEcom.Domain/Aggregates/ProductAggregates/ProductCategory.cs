@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace ExampleEcom.Domain.Aggregates.ProductAggregate
+namespace ExampleEcom.Domain.Aggregates.ProductAggregates
 {
     public class ProductCategory
     {

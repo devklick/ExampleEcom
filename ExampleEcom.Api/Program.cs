@@ -5,7 +5,6 @@ using ExampleEcom.Domain.Repository;
 using ExampleEcom.Infrastructure.Persistence;
 using ExampleEcom.Infrastructure.Users;
 using MediatR;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace ExampleEcom.Api;
@@ -69,7 +68,7 @@ public class Program
 
     private static void AddIdentity(WebApplicationBuilder builder)
     {
-        builder.Services.AddIdentity<User, IdentityRole>(options =>
+        builder.Services.AddIdentity<User, Role>(options =>
         {
             options.SignIn.RequireConfirmedAccount = true;
             options.Password.RequiredLength = 9;
@@ -81,7 +80,6 @@ public class Program
             options.SignIn.RequireConfirmedAccount = true;
             options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_";
         })
-        .AddRoles<IdentityRole>()
         .AddEntityFrameworkStores<AppDbContext>();
     }
 

@@ -1,4 +1,4 @@
-using ExampleEcom.Domain.Aggregates.ProductAggregate;
+using ExampleEcom.Domain.Aggregates.ProductAggregates;
 using ExampleEcom.Domain.Aggregates.UserAggregates;
 using Microsoft.EntityFrameworkCore;
 

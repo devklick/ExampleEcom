@@ -1,4 +1,4 @@
-namespace ExampleEcom.Domain.Aggregates.ProductAggregate
+namespace ExampleEcom.Domain.Aggregates.ProductAggregates
 {
     public enum CurrencySymbolOrientation
     {

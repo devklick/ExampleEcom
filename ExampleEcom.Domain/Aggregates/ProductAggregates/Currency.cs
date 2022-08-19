@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace ExampleEcom.Domain.Aggregates.ProductAggregate
+namespace ExampleEcom.Domain.Aggregates.ProductAggregates
 {
     public class Currency
     {

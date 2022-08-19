@@ -29,7 +29,7 @@ const UserRegistration: React.FC<UserRegistrationProps> = () => {
 
   const handleSubmitRegistration = async (request: CreateUserRequest) => {
     const result = await userService.createUser(request);
-    if (result.errors) setErrors(result.errors);
+    setErrors(result.errors);
   };
 
   const formField = (

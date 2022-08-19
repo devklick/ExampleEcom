@@ -3,19 +3,17 @@ using System;
 using ExampleEcom.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace ExampleEcom.Infrastructure.Persistence
+namespace ExampleEcom.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20220817212159_SnakeCaseColumnNames")]
-    partial class SnakeCaseColumnNames
+    partial class AppDbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -24,7 +22,7 @@ namespace ExampleEcom.Infrastructure.Persistence
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("ExampleEcom.Domain.Aggregates.ProductAggregate.Currency", b =>
+            modelBuilder.Entity("ExampleEcom.Domain.Aggregates.ProductAggregates.Currency", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -70,7 +68,7 @@ namespace ExampleEcom.Infrastructure.Persistence
                     b.ToTable("currency");
                 });
 
-            modelBuilder.Entity("ExampleEcom.Domain.Aggregates.ProductAggregate.Product", b =>
+            modelBuilder.Entity("ExampleEcom.Domain.Aggregates.ProductAggregates.Product", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -101,7 +99,7 @@ namespace ExampleEcom.Infrastructure.Persistence
                     b.ToTable("product");
                 });
 
-            modelBuilder.Entity("ExampleEcom.Domain.Aggregates.ProductAggregate.ProductCategory", b =>
+            modelBuilder.Entity("ExampleEcom.Domain.Aggregates.ProductAggregates.ProductCategory", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -127,7 +125,7 @@ namespace ExampleEcom.Infrastructure.Persistence
                     b.ToTable("product_category");
                 });
 
-            modelBuilder.Entity("ExampleEcom.Domain.Aggregates.ProductAggregate.ProductPrice", b =>
+            modelBuilder.Entity("ExampleEcom.Domain.Aggregates.ProductAggregates.ProductPrice", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -157,11 +155,67 @@ namespace ExampleEcom.Infrastructure.Persistence
                     b.ToTable("product_price");
                 });
 
+            modelBuilder.Entity("ExampleEcom.Domain.Aggregates.UserAggregates.Role", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("text")
+                        .HasColumnName("concurrency_stamp");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)")
+                        .HasColumnName("name");
+
+                    b.Property<string>("NormalizedName")
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)")
+                        .HasColumnName("normalized_name");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedName")
+                        .IsUnique()
+                        .HasDatabaseName("RoleNameIndex");
+
+                    b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            ConcurrencyStamp = "6d688c6b-6ebd-43af-b9ec-f2d6b289e9c6",
+                            Name = "SystemAdmin"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            ConcurrencyStamp = "d5b5391c-b79f-448c-82f3-3b2c76464ce6",
+                            Name = "SiteAdmin"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            ConcurrencyStamp = "9344c678-e6a6-4fbb-98e4-f10121bc63a1",
+                            Name = "SiteUser"
+                        });
+                });
+
             modelBuilder.Entity("ExampleEcom.Domain.Aggregates.UserAggregates.User", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("text")
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
                         .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("integer")
@@ -246,39 +300,26 @@ namespace ExampleEcom.Infrastructure.Persistence
                         .HasDatabaseName("UserNameIndex");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "d3da3376-ff60-4882-a890-466dc53efe35",
+                            Email = "system.admin@example-ecom.com",
+                            EmailConfirmed = true,
+                            FirstName = "SYSTEM",
+                            LastName = "ADMIN",
+                            LockoutEnabled = false,
+                            PasswordHash = "AQAAAAEAACcQAAAAEANLjZymlWvuMaeERlTbDzrun+RpAKZqHoK/se5eT6IkZLAfrpoPGRBMUdtAws5iwA==",
+                            PhoneNumberConfirmed = false,
+                            TwoFactorEnabled = false,
+                            UserName = "SYSTEM_ADMIN"
+                        });
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("text")
-                        .HasColumnName("id");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken()
-                        .HasColumnType("text")
-                        .HasColumnName("concurrency_stamp");
-
-                    b.Property<string>("Name")
-                        .HasMaxLength(256)
-                        .HasColumnType("character varying(256)")
-                        .HasColumnName("name");
-
-                    b.Property<string>("NormalizedName")
-                        .HasMaxLength(256)
-                        .HasColumnType("character varying(256)")
-                        .HasColumnName("normalized_name");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NormalizedName")
-                        .IsUnique()
-                        .HasDatabaseName("RoleNameIndex");
-
-                    b.ToTable("AspNetRoles", (string)null);
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -295,9 +336,8 @@ namespace ExampleEcom.Infrastructure.Persistence
                         .HasColumnType("text")
                         .HasColumnName("claim_value");
 
-                    b.Property<string>("RoleId")
-                        .IsRequired()
-                        .HasColumnType("text")
+                    b.Property<int>("RoleId")
+                        .HasColumnType("integer")
                         .HasColumnName("role_id");
 
                     b.HasKey("Id");
@@ -307,7 +347,7 @@ namespace ExampleEcom.Infrastructure.Persistence
                     b.ToTable("AspNetRoleClaims", (string)null);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -324,9 +364,8 @@ namespace ExampleEcom.Infrastructure.Persistence
                         .HasColumnType("text")
                         .HasColumnName("claim_value");
 
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("text")
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer")
                         .HasColumnName("user_id");
 
                     b.HasKey("Id");
@@ -336,7 +375,7 @@ namespace ExampleEcom.Infrastructure.Persistence
                     b.ToTable("AspNetUserClaims", (string)null);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", b =>
                 {
                     b.Property<string>("LoginProvider")
                         .HasColumnType("text")
@@ -350,9 +389,8 @@ namespace ExampleEcom.Infrastructure.Persistence
                         .HasColumnType("text")
                         .HasColumnName("provider_display_name");
 
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("text")
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer")
                         .HasColumnName("user_id");
 
                     b.HasKey("LoginProvider", "ProviderKey");
@@ -362,14 +400,14 @@ namespace ExampleEcom.Infrastructure.Persistence
                     b.ToTable("AspNetUserLogins", (string)null);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<int>", b =>
                 {
-                    b.Property<string>("UserId")
-                        .HasColumnType("text")
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer")
                         .HasColumnName("user_id");
 
-                    b.Property<string>("RoleId")
-                        .HasColumnType("text")
+                    b.Property<int>("RoleId")
+                        .HasColumnType("integer")
                         .HasColumnName("role_id");
 
                     b.HasKey("UserId", "RoleId");
@@ -377,12 +415,24 @@ namespace ExampleEcom.Infrastructure.Persistence
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = 1,
+                            RoleId = 1
+                        },
+                        new
+                        {
+                            UserId = 1,
+                            RoleId = 2
+                        });
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
                 {
-                    b.Property<string>("UserId")
-                        .HasColumnType("text")
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer")
                         .HasColumnName("user_id");
 
                     b.Property<string>("LoginProvider")
@@ -402,9 +452,9 @@ namespace ExampleEcom.Infrastructure.Persistence
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("ExampleEcom.Domain.Aggregates.ProductAggregate.Product", b =>
+            modelBuilder.Entity("ExampleEcom.Domain.Aggregates.ProductAggregates.Product", b =>
                 {
-                    b.HasOne("ExampleEcom.Domain.Aggregates.ProductAggregate.ProductCategory", "Category")
+                    b.HasOne("ExampleEcom.Domain.Aggregates.ProductAggregates.ProductCategory", "Category")
                         .WithMany()
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -413,24 +463,24 @@ namespace ExampleEcom.Infrastructure.Persistence
                     b.Navigation("Category");
                 });
 
-            modelBuilder.Entity("ExampleEcom.Domain.Aggregates.ProductAggregate.ProductCategory", b =>
+            modelBuilder.Entity("ExampleEcom.Domain.Aggregates.ProductAggregates.ProductCategory", b =>
                 {
-                    b.HasOne("ExampleEcom.Domain.Aggregates.ProductAggregate.ProductCategory", "ParentCategory")
+                    b.HasOne("ExampleEcom.Domain.Aggregates.ProductAggregates.ProductCategory", "ParentCategory")
                         .WithMany("ChildCategories")
                         .HasForeignKey("ParentCategoryId");
 
                     b.Navigation("ParentCategory");
                 });
 
-            modelBuilder.Entity("ExampleEcom.Domain.Aggregates.ProductAggregate.ProductPrice", b =>
+            modelBuilder.Entity("ExampleEcom.Domain.Aggregates.ProductAggregates.ProductPrice", b =>
                 {
-                    b.HasOne("ExampleEcom.Domain.Aggregates.ProductAggregate.Currency", "Currency")
+                    b.HasOne("ExampleEcom.Domain.Aggregates.ProductAggregates.Currency", "Currency")
                         .WithMany()
                         .HasForeignKey("CurrencyId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ExampleEcom.Domain.Aggregates.ProductAggregate.Product", "Product")
+                    b.HasOne("ExampleEcom.Domain.Aggregates.ProductAggregates.Product", "Product")
                         .WithMany("Prices")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -441,16 +491,16 @@ namespace ExampleEcom.Infrastructure.Persistence
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                    b.HasOne("ExampleEcom.Domain.Aggregates.UserAggregates.Role", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>", b =>
                 {
                     b.HasOne("ExampleEcom.Domain.Aggregates.UserAggregates.User", null)
                         .WithMany()
@@ -459,7 +509,7 @@ namespace ExampleEcom.Infrastructure.Persistence
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", b =>
                 {
                     b.HasOne("ExampleEcom.Domain.Aggregates.UserAggregates.User", null)
                         .WithMany()
@@ -468,9 +518,9 @@ namespace ExampleEcom.Infrastructure.Persistence
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<int>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                    b.HasOne("ExampleEcom.Domain.Aggregates.UserAggregates.Role", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -483,7 +533,7 @@ namespace ExampleEcom.Infrastructure.Persistence
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
                 {
                     b.HasOne("ExampleEcom.Domain.Aggregates.UserAggregates.User", null)
                         .WithMany()
@@ -492,12 +542,12 @@ namespace ExampleEcom.Infrastructure.Persistence
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("ExampleEcom.Domain.Aggregates.ProductAggregate.Product", b =>
+            modelBuilder.Entity("ExampleEcom.Domain.Aggregates.ProductAggregates.Product", b =>
                 {
                     b.Navigation("Prices");
                 });
 
-            modelBuilder.Entity("ExampleEcom.Domain.Aggregates.ProductAggregate.ProductCategory", b =>
+            modelBuilder.Entity("ExampleEcom.Domain.Aggregates.ProductAggregates.ProductCategory", b =>
                 {
                     b.Navigation("ChildCategories");
                 });

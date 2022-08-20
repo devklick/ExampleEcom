@@ -8,7 +8,6 @@ using ExampleEcom.Domain.Common;
 using ExampleEcom.Domain.Extensions;
 using ExampleEcom.Domain.Repository;
 using MediatR;
-using Microsoft.AspNetCore.Identity;
 
 namespace ExampleEcom.Api.Users.Handlers
 {
@@ -49,25 +48,18 @@ namespace ExampleEcom.Api.Users.Handlers
                     if (error.Code == "DuplicateUserName")
                     {
                         response.StatusCode = 400;
-                        response.Errors.Add(nameof(CreateUserRequest.UserName).ToCamelCase(), new HashSet<string> { error.Description });
+                        response.AddError(nameof(CreateUserRequest.UserName).ToCamelCase(), error.Description);
                     }
                     else if (error.Code == "DuplicateEmail")
                     {
                         response.StatusCode = 400;
-                        response.Errors.Add(nameof(CreateUserRequest.Email).ToCamelCase(), new HashSet<string> { error.Description });
+                        response.AddError(nameof(CreateUserRequest.Email).ToCamelCase(), error.Description);
                     }
                     else
                     {
                         response.StatusCode = 500;
                         _logger.LogWarning("Unhandled error code: {code} ({description})", error.Code, error.Description);
-                        if (response.Errors.ContainsKey("."))
-                        {
-                            response.Errors["."].Add(error.Description);
-                        }
-                        else
-                        {
-                            response.Errors.Add(error.Code, new HashSet<string> { error.Description });
-                        }
+                        response.AddError(".", error.Description);
                     }
                 }
             }

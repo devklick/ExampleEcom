@@ -11,12 +11,12 @@ import ContentContainer from "../content-container/content-container";
 import userService from "../../services/ecom-user-api-service";
 import Form from "../form/form";
 
-import styles from "./user-registration.module.scss";
+import styles from "./registration-form.module.scss";
 import { ApiResponseErrors } from "../../schemas/base-api-schema";
 
 export interface UserRegistrationProps {}
 
-const UserRegistration: React.FC<UserRegistrationProps> = () => {
+const RegistrationForm: React.FC<UserRegistrationProps> = () => {
   const [apiErrors, setErrors] = useState<ApiResponseErrors>({});
 
   const {
@@ -75,4 +75,4 @@ const UserRegistration: React.FC<UserRegistrationProps> = () => {
   );
 };
 
-export default UserRegistration;
+export default RegistrationForm;

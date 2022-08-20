@@ -19,9 +19,17 @@ namespace ExampleEcom.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<ApiResponse<CreateUserResponse>>> Post([FromBody] CreateUserRequest createUserRequest)
+        public async Task<ActionResult<ApiResponse<CreateUserResponse>>> Create([FromBody] CreateUserRequest request)
         {
-            var command = new CreateUserCommand(createUserRequest);
+            var command = new CreateUserCommand(request);
+            var response = await _mediator.Send(command);
+            return CreateApiResponse(response);
+        }
+
+        [HttpPost("/login")]
+        public async Task<ActionResult<ApiResponse<UserLoginResponse>>> LogIn([FromBody] UserLoginRequest request)
+        {
+            var command = new UserLoginCommand(request);
             var response = await _mediator.Send(command);
             return CreateApiResponse(response);
         }

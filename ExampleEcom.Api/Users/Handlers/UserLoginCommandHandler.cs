@@ -7,6 +7,7 @@ using ExampleEcom.Domain.Aggregates.UserAggregates;
 using ExampleEcom.Domain.Common;
 using ExampleEcom.Domain.Extensions;
 using ExampleEcom.Domain.Repository;
+using ExampleEcom.Infrastructure.Crypto.Jwt;
 using MediatR;
 
 
@@ -17,12 +18,14 @@ namespace ExampleEcom.Api.Users.Handlers
         private readonly IUserRepository _repository;
         private readonly IMapper _mapper;
         private readonly ILogger<UserLoginCommandHandler> _logger;
+        private readonly IJwtService _jwtService;
 
-        public UserLoginCommandHandler(IUserRepository repository, IMapper mapper, ILogger<UserLoginCommandHandler> logger)
+        public UserLoginCommandHandler(IUserRepository repository, IMapper mapper, ILogger<UserLoginCommandHandler> logger, IJwtService jwtService)
         {
             _repository = repository;
             _mapper = mapper;
             _logger = logger;
+            _jwtService = jwtService;
         }
 
         public async Task<ApiResponse<UserLoginResponse>> Handle(UserLoginCommand request, CancellationToken cancellationToken)
@@ -34,10 +37,26 @@ namespace ExampleEcom.Api.Users.Handlers
 
         private ApiResponse<UserLoginResponse> CreateApiResponse(Result<User?> result)
         {
+            if (result.Success) return CreateSuccessResponse(result);
+            return CreateFailureResponse(result);
+        }
+
+        private ApiResponse<UserLoginResponse> CreateSuccessResponse(Result<User?> result)
+        {
             var response = new ApiResponse<UserLoginResponse>
             {
-                Value = result.Success ? _mapper.Map<UserLoginResponse>(result.Data) : null,
+                Value = _mapper.Map<UserLoginResponse>(result.Data),
                 StatusCode = 200
+            };
+            response.Value.Token = _jwtService.GenerateToken(result.Data ?? throw new ArgumentNullException(nameof(result), "Result value is null"));
+            return response;
+        }
+
+        private ApiResponse<UserLoginResponse> CreateFailureResponse(Result<User?> result)
+        {
+            var response = new ApiResponse<UserLoginResponse>
+            {
+                StatusCode = 500
             };
 
             if (result.Errors != null)
@@ -62,7 +81,6 @@ namespace ExampleEcom.Api.Users.Handlers
                     }
                 }
             }
-
             return response;
         }
     }

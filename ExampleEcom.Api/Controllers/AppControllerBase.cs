@@ -5,7 +5,7 @@ namespace ExampleEcom.Api.Controllers
 {
     public class AppControllerBase : ControllerBase
     {
-        protected ActionResult<ApiResponse<T>> CreateApiResponse<T>(ApiResponse<T> response)
+        protected ActionResult<ApiResponse<T>> CreateObjectResult<T>(ApiResponse<T> response)
         {
             return new ObjectResult(response)
             {

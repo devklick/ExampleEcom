@@ -3,6 +3,7 @@ using ExampleEcom.Domain.Aggregates.UserAggregates;
 using ExampleEcom.Domain.Configuration;
 using ExampleEcom.Domain.Context;
 using ExampleEcom.Domain.Repository;
+using ExampleEcom.Infrastructure.Crypto.Jwt;
 using ExampleEcom.Infrastructure.Persistence;
 using ExampleEcom.Infrastructure.Users;
 using MediatR;
@@ -33,8 +34,15 @@ public class Program
         AddMediatR(builder);
         AddRepositories(builder);
         AddRouteOptions(builder);
+        AddJwt(builder);
 
         return builder;
+    }
+
+    private static void AddJwt(WebApplicationBuilder builder)
+    {
+        builder.Services.AddScoped<IJwtService, JwtService>();
+        builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("JwtSettings"));
     }
 
     private static void AddRouteOptions(WebApplicationBuilder builder)

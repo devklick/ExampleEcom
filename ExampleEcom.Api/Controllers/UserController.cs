@@ -23,7 +23,7 @@ namespace ExampleEcom.Api.Controllers
         {
             var command = new CreateUserCommand(request);
             var response = await _mediator.Send(command);
-            return CreateApiResponse(response);
+            return CreateObjectResult(response);
         }
 
         [HttpPost("login")]
@@ -31,7 +31,7 @@ namespace ExampleEcom.Api.Controllers
         {
             var command = new UserLoginCommand(request);
             var response = await _mediator.Send(command);
-            return CreateApiResponse(response);
+            return CreateObjectResult(response);
         }
     }
 }

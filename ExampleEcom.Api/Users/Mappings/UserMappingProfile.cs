@@ -11,6 +11,8 @@ namespace ExampleEcom.Api.Users.Mappings
         {
             CreateMap<CreateUserRequest, User>();
             CreateMap<User, CreateUserResponse>();
+
+            CreateMap<User, UserLoginResponse>();
         }
     }
 }

@@ -19,7 +19,7 @@ namespace ExampleEcom.Infrastructure.Users
 
         public async Task<Result<User>> CreateUser(User user, string password)
         {
-            user.PasswordHash = _userManager.PasswordHasher.HashPassword(user, password);
+            user.PasswordHash = BCrypt.Net.BCrypt.HashPassword(password);
             var result = await _userManager.CreateAsync(user);
 
             return new Result<User>

@@ -1,6 +1,7 @@
 using System.Reflection;
 using ExampleEcom.Domain.Aggregates.UserAggregates;
 using ExampleEcom.Domain.Configuration;
+using ExampleEcom.Domain.Context;
 using ExampleEcom.Domain.Repository;
 using ExampleEcom.Infrastructure.Persistence;
 using ExampleEcom.Infrastructure.Users;
@@ -31,8 +32,14 @@ public class Program
         AddAutoMapper(builder);
         AddMediatR(builder);
         AddRepositories(builder);
+        AddRouteOptions(builder);
 
         return builder;
+    }
+
+    private static void AddRouteOptions(WebApplicationBuilder builder)
+    {
+        builder.Services.Configure<RouteOptions>(options => options.LowercaseUrls = true);
     }
 
     private static void AddMediatR(WebApplicationBuilder builder)
@@ -64,6 +71,7 @@ public class Program
         {
             options.UseNpgsql(defaultConnection);
         });
+        builder.Services.AddScoped<IAppDbContext>(p => p.GetRequiredService<AppDbContext>());
     }
 
     private static void AddIdentity(WebApplicationBuilder builder)

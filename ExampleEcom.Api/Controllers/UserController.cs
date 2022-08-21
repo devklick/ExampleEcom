@@ -26,7 +26,7 @@ namespace ExampleEcom.Api.Controllers
             return CreateApiResponse(response);
         }
 
-        [HttpPost("/login")]
+        [HttpPost("login")]
         public async Task<ActionResult<ApiResponse<UserLoginResponse>>> LogIn([FromBody] UserLoginRequest request)
         {
             var command = new UserLoginCommand(request);

@@ -22,11 +22,17 @@ const Form: React.FC<FormProps> = ({
       onSubmit={onSubmit}
     >
       {children}
-      <input
+      <button
         className={`${styles["form-submit"]} ${submitClassName ?? ""}`}
+        type={"submit"}
+      >
+        {submitButtonText ?? "Submit"}
+      </button>
+      {/* <input
+        
         type="submit"
         value={submitButtonText ?? "Submit"}
-      />
+      /> */}
     </form>
   );
 };

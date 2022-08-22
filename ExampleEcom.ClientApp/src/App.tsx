@@ -5,14 +5,16 @@ import RegistrationForm from "./components/registration-form/registration-form";
 import AppHeader from "./components/app-header/app-header";
 import LoginForm from "./components/login-form/login-form";
 
-function App() {
+interface AppProps {
+  children: React.ReactNode;
+}
+const App: React.FC<AppProps> = ({ children }) => {
   return (
     <div className="App">
       <AppHeader />
-      {/* <RegistrationForm /> */}
-      <LoginForm></LoginForm>
+      {children}
     </div>
   );
-}
+};
 
 export default App;

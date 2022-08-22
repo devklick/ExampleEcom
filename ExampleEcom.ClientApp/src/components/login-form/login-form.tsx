@@ -45,23 +45,19 @@ const LoginForm: React.FC<LoginFormProps> = () => {
   );
 
   return (
-    <div className={styles["user-registration"]}>
+    <div className={styles["login-form"]}>
       <ContentContainer>
-        <h1 className={styles["user-registration-content__header"]}>
-          User Login
-        </h1>
+        <h1 className={styles["login-form-content__header"]}>User Login</h1>
 
         <Form
-          formClassName={styles["user-registration-content__form"]}
-          submitButtonClassName={
-            styles["user-registration-content__form-submit"]
-          }
-          submitButtonText="Submit registration"
+          formClassName={styles["login-form-content__form"]}
+          submitButtonClassName={styles["login-form-content__form-submit"]}
+          submitButtonText="Submit Login"
           onSubmit={handleSubmit(
             async (d) => await handleSubmitRegistration(d as UserLoginRequest)
           )}
         >
-          <div className={styles["user-registration-content__form-fields"]}>
+          <div className={styles["login-form-content__form-fields"]}>
             {formField("userNameOrEmail")}
             {formField("password", "password")}
           </div>

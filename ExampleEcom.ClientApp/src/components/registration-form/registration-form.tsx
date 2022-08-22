@@ -18,6 +18,7 @@ export interface UserRegistrationProps {}
 
 const RegistrationForm: React.FC<UserRegistrationProps> = () => {
   const [apiErrors, setErrors] = useState<ApiResponseErrors>({});
+  console.log("in reg form");
 
   const {
     register,

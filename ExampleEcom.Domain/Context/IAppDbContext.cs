@@ -8,5 +8,6 @@ namespace ExampleEcom.Domain.Context
     {
         DbSet<Product> Products { get; }
         DbSet<User> Users { get; }
+        DbSet<Role> Roles { get; }
     }
 }

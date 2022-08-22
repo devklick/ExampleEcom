@@ -36,6 +36,8 @@ namespace ExampleEcom.Infrastructure.Users
                     return FailedUserResult(result);
             }
 
+            user.Roles = await _context.Roles.Where(r => roles.Contains(r.Name)).ToListAsync();
+
             return new Result<User>
             {
                 Success = true,

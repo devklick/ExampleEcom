@@ -25,10 +25,9 @@ public class AppDbContext : IdentityDbContext<User, Role, int>, IAppDbContext
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
+        base.OnModelCreating(builder);
         builder.ApplySingularizedSnakeCaseNamingConvention();
         builder.SeedRoles();
         builder.SeedUsers(_configuration, _passwordHasher);
-
-        base.OnModelCreating(builder);
     }
 }

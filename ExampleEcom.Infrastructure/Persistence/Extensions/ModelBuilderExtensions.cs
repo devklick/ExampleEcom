@@ -9,7 +9,10 @@ namespace ExampleEcom.Infrastructure.Persistence.Extensions
         {
             foreach (var entity in modelBuilder.Model.GetEntityTypes())
             {
-                entity.SetTableName(entity.DisplayName().ToSnakeCase());
+                var tableName = entity.GetTableName();
+
+                if (tableName == null) continue;
+                entity.SetTableName(tableName.ToSnakeCase());
 
                 foreach (var property in entity.GetProperties())
                 {

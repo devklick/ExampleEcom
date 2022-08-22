@@ -13,7 +13,7 @@ const createUser = async (
 ): Promise<ApiResponse<CreateUserResponse>> => {
   return await apiService.post<CreateUserResponse>(ecomApiProxy, {
     body: request,
-    endpoint: "user",
+    endpoint: "/user",
   });
 };
 
@@ -22,7 +22,7 @@ const login = async (
 ): Promise<ApiResponse<UserLoginResponse>> => {
   return await apiService.post<UserLoginResponse>(ecomApiProxy, {
     body: request,
-    endpoint: "user/login",
+    endpoint: "/user/login",
   });
 };
 

@@ -1,9 +1,13 @@
-import React, { HTMLInputTypeAttribute, useState } from "react";
+import React, {
+  HTMLInputTypeAttribute,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { ApiResponseErrors } from "../../schemas/base-api-schema";
+import { ApiResponseErrors, isSuccess } from "../../schemas/base-api-schema";
 import {
-  CreateUserRequest,
   UserLoginRequest,
   userLoginRequestSchema,
 } from "../../schemas/user-schemas";
@@ -12,11 +16,22 @@ import FormField from "../form-field/form-field";
 import styles from "./login-form.module.scss";
 import ContentContainer from "../content-container/content-container";
 import Form from "../form/form";
+import { useNavigate } from "react-router-dom";
+import UserContext from "../../context/user-context";
 
 export interface LoginFormProps {}
 
 const LoginForm: React.FC<LoginFormProps> = () => {
   const [apiErrors, setErrors] = useState<ApiResponseErrors>({});
+  const { user, setUser } = useContext(UserContext);
+  const navigate = useNavigate();
+
+  const navigateHome = () => navigate("/");
+
+  useEffect(() => {
+    if (user) navigateHome();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user]);
 
   const {
     register,
@@ -29,6 +44,10 @@ const LoginForm: React.FC<LoginFormProps> = () => {
   const handleSubmitRegistration = async (request: UserLoginRequest) => {
     const result = await userService.login(request);
     setErrors(result.errors);
+    if (isSuccess(result)) {
+      setUser(result.value);
+      navigateHome();
+    }
   };
 
   const formField = (

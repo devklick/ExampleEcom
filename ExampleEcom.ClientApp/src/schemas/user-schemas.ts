@@ -38,7 +38,16 @@ export const userLoginResponseSchema = z.object({
   token: z.string(),
 });
 
+export const userSchema = z.object({
+  id: z.number().int(),
+  firstName: z.string(),
+  lastName: z.string(),
+  userName: z.string(),
+  token: z.string(),
+});
+
 export type CreateUserRequest = z.infer<typeof createUserRequestSchema>;
 export type CreateUserResponse = z.infer<typeof createUserResponseSchema>;
 export type UserLoginRequest = z.infer<typeof userLoginRequestSchema>;
 export type UserLoginResponse = z.infer<typeof userLoginResponseSchema>;
+export type User = z.infer<typeof userSchema>;

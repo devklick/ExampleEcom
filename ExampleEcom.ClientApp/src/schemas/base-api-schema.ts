@@ -7,3 +7,6 @@ export type ApiResponse<T> = {
   value: T;
   errors: ApiResponseErrors;
 };
+
+export const isSuccess = <T>(response: ApiResponse<T>) =>
+  response.statusType === "success";

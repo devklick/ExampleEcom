@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { HTMLInputTypeAttribute, useState } from "react";
+import { HTMLInputTypeAttribute, useContext, useEffect, useState } from "react";
 
 import {
   CreateUserRequest,
@@ -13,12 +13,20 @@ import Form from "../form/form";
 
 import styles from "./registration-form.module.scss";
 import { ApiResponseErrors } from "../../schemas/base-api-schema";
+import UserContext from "../../context/user-context";
+import { useNavigate } from "react-router-dom";
 
 export interface UserRegistrationProps {}
 
 const RegistrationForm: React.FC<UserRegistrationProps> = () => {
   const [apiErrors, setErrors] = useState<ApiResponseErrors>({});
-  console.log("in reg form");
+  const { user } = useContext(UserContext);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (user) navigate("/");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user]);
 
   const {
     register,

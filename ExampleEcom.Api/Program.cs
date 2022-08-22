@@ -27,8 +27,8 @@ public class Program
 
         builder.Services.AddControllers();
 
-        AddDbContext(builder);
         AddIdentity(builder);
+        AddDbContext(builder);
         AddAuthorization(builder);
         AddSwagger(builder);
         AddAutoMapper(builder);

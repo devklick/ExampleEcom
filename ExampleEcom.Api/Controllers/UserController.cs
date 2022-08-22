@@ -4,6 +4,7 @@ using ExampleEcom.Api.Users.Commands;
 using ExampleEcom.Api.Users.Requests;
 using ExampleEcom.Api.Users.Responses;
 using MediatR;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ExampleEcom.Api.Controllers
@@ -34,6 +35,9 @@ namespace ExampleEcom.Api.Controllers
             var command = new UserLoginCommand(request);
             var response = await _mediator.Send(command);
             return CreateObjectResult(response);
+            await HttpContext.SignOutAsync();
         }
+
+
     }
 }

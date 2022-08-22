@@ -27,7 +27,7 @@ namespace ExampleEcom.Api.Users.Handlers
         public async Task<ApiResponse<CreateUserResponse>> Handle(CreateUserCommand request, CancellationToken cancellationToken)
         {
             var user = _mapper.Map<User>(request.Data);
-            var result = await _repository.CreateUser(user, request.Data.Password);
+            var result = await _repository.CreateUser(user, request.Data.Password, RoleConstants.SITE_USER_ROLE_NAME);
             return CreateResponse(result);
         }
 

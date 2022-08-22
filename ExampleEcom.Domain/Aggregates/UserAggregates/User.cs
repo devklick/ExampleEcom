@@ -9,5 +9,7 @@ namespace ExampleEcom.Domain.Aggregates.UserAggregates
 
         [Required, StringLength(64)]
         public string LastName { get; set; } = default!;
+
+        public List<Role> Roles { get; set; }
     }
 }

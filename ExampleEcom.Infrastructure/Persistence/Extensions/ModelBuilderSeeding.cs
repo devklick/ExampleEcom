@@ -10,9 +10,24 @@ namespace ExampleEcom.Infrastructure.Persistence.Extensions
         public static void SeedRoles(this ModelBuilder builder)
         {
             builder.Entity<Role>().HasData(
-                new Role { Id = RoleConstants.SYSTEM_ADMIN_ROLE_ID, Name = RoleConstants.SYSTEM_ADMIN_ROLE_NAME },
-                new Role { Id = RoleConstants.SITE_ADMIN_ROLE_ID, Name = RoleConstants.SITE_ADMIN_ROLE_NAME },
-                new Role { Id = RoleConstants.SITE_USER_ROLE_ID, Name = RoleConstants.SITE_USER_ROLE_NAME }
+                new Role
+                {
+                    Id = RoleConstants.SYSTEM_ADMIN_ROLE_ID,
+                    Name = RoleConstants.SYSTEM_ADMIN_ROLE_NAME,
+                    NormalizedName = RoleConstants.SYSTEM_ADMIN_ROLE_NAME_NORMALIZED
+                },
+                new Role
+                {
+                    Id = RoleConstants.SITE_ADMIN_ROLE_ID,
+                    Name = RoleConstants.SITE_ADMIN_ROLE_NAME,
+                    NormalizedName = RoleConstants.SITE_ADMIN_ROLE_NAME_NORMALIZED
+                },
+                new Role
+                {
+                    Id = RoleConstants.SITE_USER_ROLE_ID,
+                    Name = RoleConstants.SITE_USER_ROLE_NAME,
+                    NormalizedName = RoleConstants.SITE_USER_ROLE_NAME_NORMALIZED
+                }
             );
         }
 
@@ -27,6 +42,8 @@ namespace ExampleEcom.Infrastructure.Persistence.Extensions
                 LastName = "ADMIN",
                 LockoutEnabled = false,
                 UserName = UserConstants.SYSTEM_ADMIN_USER_NAME,
+                NormalizedUserName = UserConstants.SYSTEM_ADMIN_USER_NAME_NORMALIZED,
+                NormalizedEmail = "system.admin@example-ecom.com".ToUpper(),
             };
             adminUser.PasswordHash = passwordHasher.HashPassword(adminUser, configuration["SeedData:SystemAdmin:Password"]);
             builder.Entity<User>().HasData(adminUser);

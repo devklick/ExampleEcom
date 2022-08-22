@@ -7,5 +7,6 @@ namespace ExampleEcom.Api.Users.Responses
         public string LastName { get; set; } = default!;
         public string UserName { get; set; } = default!;
         public string Token { get; set; } = default!;
+        public List<string> Roles { get; set; } = default!;
     }
 }

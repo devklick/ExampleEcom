@@ -5,9 +5,9 @@ namespace ExampleEcom.Api.Users.Requests
     public class UserLoginRequest
     {
         [Required]
-        public string UserNameOrEmail { get; set; }
+        public string UserNameOrEmail { get; set; } = default!;
 
         [Required]
-        public string Password { get; set; }
+        public string Password { get; set; } = default!;
     }
 }

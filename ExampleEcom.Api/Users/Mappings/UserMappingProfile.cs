@@ -10,9 +10,15 @@ namespace ExampleEcom.Api.Users.Mappings
         public UserMappingProfile()
         {
             CreateMap<CreateUserRequest, User>();
-            CreateMap<User, CreateUserResponse>();
+            CreateMap<User, CreateUserResponse>()
+                .ForMember(
+                    dest => dest.Roles,
+                    opt => opt.MapFrom(src => src.Roles.Select(r => r.Name)));
 
-            CreateMap<User, UserLoginResponse>();
+            CreateMap<User, UserLoginResponse>()
+                .ForMember(
+                    dest => dest.Roles,
+                    opt => opt.MapFrom(src => src.Roles.Select(r => r.Name)));
         }
     }
 }

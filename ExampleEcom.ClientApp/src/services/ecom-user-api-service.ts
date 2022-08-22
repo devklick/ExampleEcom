@@ -1,5 +1,10 @@
 import { ApiResponse } from "../schemas/base-api-schema";
-import { CreateUserRequest, CreateUserResponse } from "../schemas/user-schemas";
+import {
+  CreateUserRequest,
+  CreateUserResponse,
+  UserLoginRequest,
+  UserLoginResponse,
+} from "../schemas/user-schemas";
 import apiService from "./api-service";
 import ecomApiProxy from "./ecom-api-proxy";
 
@@ -12,8 +17,18 @@ const createUser = async (
   });
 };
 
+const login = async (
+  request: UserLoginRequest
+): Promise<ApiResponse<UserLoginResponse>> => {
+  return await apiService.post<UserLoginResponse>(ecomApiProxy, {
+    body: request,
+    endpoint: "user/login",
+  });
+};
+
 const userService = {
   createUser,
+  login,
 };
 
 export default userService;

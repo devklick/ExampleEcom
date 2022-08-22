@@ -30,7 +30,7 @@ namespace ExampleEcom.Infrastructure.Crypto.Jwt
             return tokenHandler.WriteToken(token);
         }
 
-        public int? ValidateToken(string token)
+        public int? ValidateToken(string? token)
         {
             if (token == null)
                 return null;

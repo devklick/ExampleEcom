@@ -30,6 +30,18 @@ namespace ExampleEcom.Infrastructure.Users
             };
         }
 
+        public async Task<Result<User>> GetUser(int id)
+        {
+            var user = _context.Users.SingleOrDefault(u => u.Id == id);
+            var result = new Result<User>
+            {
+                Data = user,
+                Success = user != null,
+            };
+            if (user == null) result.AddError("UserNotFound", "No user found with the specified ID");
+            return await Task.FromResult(result);
+        }
+
         public async Task<Result<User?>> Login(string usernameOrEmail, string password)
         {
             var result = new Result<User?>();

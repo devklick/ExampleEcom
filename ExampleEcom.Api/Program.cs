@@ -4,6 +4,7 @@ using ExampleEcom.Domain.Configuration;
 using ExampleEcom.Domain.Context;
 using ExampleEcom.Domain.Repository;
 using ExampleEcom.Infrastructure.Crypto.Jwt;
+using ExampleEcom.Api.Middleware;
 using ExampleEcom.Infrastructure.Persistence;
 using ExampleEcom.Infrastructure.Users;
 using MediatR;
@@ -121,6 +122,8 @@ public class Program
         app.UseHttpsRedirection();
 
         app.UseAuthorization();
+
+        app.UseMiddleware<UserAuthorizationMiddleware>();
 
         app.MapControllers();
 

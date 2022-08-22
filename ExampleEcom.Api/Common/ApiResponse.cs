@@ -2,6 +2,8 @@ using System.Linq.Expressions;
 
 namespace ExampleEcom.Api.Common
 {
+    public class ApiResponse : ApiResponse<object>
+    { }
     public class ApiResponse<T>
     {
         public int StatusCode { get; set; }
@@ -21,5 +23,16 @@ namespace ExampleEcom.Api.Common
         //     var name = paramType.GetMember(((MemberExpression)nameExp.Body).Member.Name)[0].Name;
         //     AddError(name, message);
         // }
+
+        public static ApiResponse<object> Unauthorized(object? value = null)
+        {
+            var response = new ApiResponse<object>
+            {
+                StatusCode = StatusCodes.Status401Unauthorized,
+                Value = value
+            };
+            response.AddError("Unauthorized", "You must be logged in to access this resource");
+            return response;
+        }
     }
 }

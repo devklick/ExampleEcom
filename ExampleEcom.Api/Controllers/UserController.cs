@@ -1,3 +1,4 @@
+using ExampleEcom.Api.Authorization;
 using ExampleEcom.Api.Common;
 using ExampleEcom.Api.Users.Commands;
 using ExampleEcom.Api.Users.Requests;
@@ -7,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ExampleEcom.Api.Controllers
 {
+    [Authorize]
     [ApiController, Route("[controller]")]
     public class UserController : AppControllerBase
     {
@@ -18,7 +20,7 @@ namespace ExampleEcom.Api.Controllers
             _mediator = mediator;
         }
 
-        [HttpPost]
+        [HttpPost, AllowAnonymous]
         public async Task<ActionResult<ApiResponse<CreateUserResponse>>> Create([FromBody] CreateUserRequest request)
         {
             var command = new CreateUserCommand(request);
@@ -26,7 +28,7 @@ namespace ExampleEcom.Api.Controllers
             return CreateObjectResult(response);
         }
 
-        [HttpPost("login")]
+        [HttpPost("login"), AllowAnonymous]
         public async Task<ActionResult<ApiResponse<UserLoginResponse>>> LogIn([FromBody] UserLoginRequest request)
         {
             var command = new UserLoginCommand(request);

@@ -8,27 +8,35 @@
     box-shadow: #000 0px 2px 4px -2px inset;
 
     &-links {
-        :link {
-            text-decoration: none;
+        &__main,
+        &__admin {
+            :link {
+                text-decoration: none;
+                color: white;
+            }
+            :visited {
+                color: white;
+            }
+            :hover {
+                border-radius: 2px;
+                border: 1px solid white;
+            }
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
             color: white;
-        }
-        :visited {
-            color: white;
-        }
-        :hover {
-            border-radius: 2px;
-            border: 1px solid white;
-        }
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        color: white;
 
-        a {
-            border: 1px solid transparent;
-            min-width: 48px;
-            padding-left: 8px;
-            padding-right: 8px;
+            a {
+                border: 1px solid transparent;
+                min-width: 48px;
+                padding-left: 8px;
+                padding-right: 8px;
+            }
+        }
+
+        &__admin {
+            position: absolute;
+            right: 0;
         }
     }
 }

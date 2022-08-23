@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { User } from "../schemas/user-schemas";
+import { User, UserRole } from "../schemas/user-schemas";
 import UserContext from "./user-context";
 
 enum StoredDataType {
@@ -28,6 +28,9 @@ const UserContextProvider: React.FC<{ children: React.ReactNode }> = ({
 }) => {
   const [user, setUser] = useState<User | null>(null);
 
+  const isSiteAdmin = () =>
+    (user && user.roles.includes(UserRole.SiteAdmin)) ?? false;
+
   useEffect(() => {
     getLocalData(StoredDataType.User, setUser);
   }, []);
@@ -37,7 +40,7 @@ const UserContextProvider: React.FC<{ children: React.ReactNode }> = ({
   }, [user]);
 
   return (
-    <UserContext.Provider value={{ user, setUser }}>
+    <UserContext.Provider value={{ user, setUser, isSiteAdmin }}>
       {children}
     </UserContext.Provider>
   );

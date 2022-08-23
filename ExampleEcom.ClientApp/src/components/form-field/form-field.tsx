@@ -1,5 +1,6 @@
 import { HTMLInputTypeAttribute } from "react";
 import { FieldErrorsImpl, FieldValues, UseFormRegister } from "react-hook-form";
+import Select from "react-select/dist/declarations/src/Select";
 import { ApiResponseErrors } from "../../schemas/base-api-schema";
 import { camelToTitle } from "../../utilities/string-utilities";
 import styles from "./form-field.module.scss";
@@ -12,14 +13,23 @@ export interface FormFieldProps<FormDataType extends { [key: string]: any }> {
     [x: string]: any;
   }>;
   apiErrors?: ApiResponseErrors;
-  type?: HTMLInputTypeAttribute;
+  type?: HTMLInputTypeAttribute | "creatable-select";
 }
+
+const isHTMLInputTypeAttribute = (
+  type: unknown
+): type is HTMLInputTypeAttribute => {
+  return (
+    typeof type === "string" &&
+    typeof (type as HTMLInputTypeAttribute) !== "undefined"
+  );
+};
 
 const FormField = <TFormDataType extends { [key: string]: any }>({
   fieldName,
   register,
   formErrors,
-  type,
+  type = "text",
   displayName,
   apiErrors,
 }: FormFieldProps<TFormDataType>) => {
@@ -33,15 +43,33 @@ const FormField = <TFormDataType extends { [key: string]: any }>({
 
   const hasErrors = !!errorMessages.length;
 
+  const renderField = () => {
+    if (isHTMLInputTypeAttribute(type)) {
+      return (
+        <input
+          className={styles["form-field__input"]}
+          {...register(fieldName)}
+          aria-invalid={hasErrors}
+          type={type}
+        />
+      );
+    }
+    // otherwise creatable select list
+    const options = [
+      { value: "chocolate", label: "Chocolate" },
+      { value: "strawberry", label: "Strawberry" },
+      { value: "vanilla", label: "Vanilla" },
+    ];
+
+    // const MyComponent = () => (
+    //   <Select options={options} />
+    // )
+  };
+
   return (
     <div className={styles["form-field"]}>
       <label className={styles["form-field__label"]}>{displayName}</label>
-      <input
-        className={styles["form-field__input"]}
-        {...register(fieldName)}
-        aria-invalid={hasErrors}
-        type={type}
-      />
+      {renderField()}
       {
         <p className={styles["form-field__input-errors"]}>
           {hasErrors && errorMessages}

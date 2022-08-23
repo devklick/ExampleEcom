@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import RegistrationForm from "./components/registration-form/registration-form";
 import LoginForm from "./components/login-form/login-form";
 import UserContextProvider from "./context/user-context-provider";
+import AddProductForm from "./components/add-product-form/add-product-form";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -19,6 +20,9 @@ root.render(
           <Route path="user">
             <Route path="register" element={<RegistrationForm />} />
             <Route path="login" element={<LoginForm />} />
+          </Route>
+          <Route path="products">
+            <Route path="add" element={<AddProductForm />} />
           </Route>
         </Routes>
       </BrowserRouter>

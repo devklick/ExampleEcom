@@ -14,19 +14,22 @@ namespace ExampleEcom.Infrastructure.Persistence.Extensions
                 {
                     Id = RoleConstants.SYSTEM_ADMIN_ROLE_ID,
                     Name = RoleConstants.SYSTEM_ADMIN_ROLE_NAME,
-                    NormalizedName = RoleConstants.SYSTEM_ADMIN_ROLE_NAME_NORMALIZED
+                    NormalizedName = RoleConstants.SYSTEM_ADMIN_ROLE_NAME_NORMALIZED,
+                    ConcurrencyStamp = Guid.NewGuid().ToString()
                 },
                 new Role
                 {
                     Id = RoleConstants.SITE_ADMIN_ROLE_ID,
                     Name = RoleConstants.SITE_ADMIN_ROLE_NAME,
-                    NormalizedName = RoleConstants.SITE_ADMIN_ROLE_NAME_NORMALIZED
+                    NormalizedName = RoleConstants.SITE_ADMIN_ROLE_NAME_NORMALIZED,
+                    ConcurrencyStamp = Guid.NewGuid().ToString()
                 },
                 new Role
                 {
                     Id = RoleConstants.SITE_USER_ROLE_ID,
                     Name = RoleConstants.SITE_USER_ROLE_NAME,
-                    NormalizedName = RoleConstants.SITE_USER_ROLE_NAME_NORMALIZED
+                    NormalizedName = RoleConstants.SITE_USER_ROLE_NAME_NORMALIZED,
+                    ConcurrencyStamp = Guid.NewGuid().ToString()
                 }
             );
         }
@@ -44,6 +47,8 @@ namespace ExampleEcom.Infrastructure.Persistence.Extensions
                 UserName = UserConstants.SYSTEM_ADMIN_USER_NAME,
                 NormalizedUserName = UserConstants.SYSTEM_ADMIN_USER_NAME_NORMALIZED,
                 NormalizedEmail = "system.admin@example-ecom.com".ToUpper(),
+                ConcurrencyStamp = Guid.NewGuid().ToString(),
+                SecurityStamp = Guid.NewGuid().ToString(),
             };
             adminUser.PasswordHash = passwordHasher.HashPassword(adminUser, configuration["SeedData:SystemAdmin:Password"]);
             builder.Entity<User>().HasData(adminUser);

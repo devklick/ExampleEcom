@@ -10,6 +10,7 @@ namespace ExampleEcom.Domain.Context
         DbSet<Product> Products { get; }
         DbSet<User> Users { get; }
         DbSet<Role> Roles { get; }
-        DbSet<IdentityUserRole<int>> UserRoles { get; set; }
+        DbSet<IdentityUserRole<int>> UserRoles { get; }
+        DbSet<Currency> Currencies { get; }
     }
 }

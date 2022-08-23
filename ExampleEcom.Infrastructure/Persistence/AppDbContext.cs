@@ -13,12 +13,18 @@ public class AppDbContext : IdentityDbContext<User, Role, int>, IAppDbContext
 {
     public DbSet<Product> Products => Set<Product>();
     public DbSet<ProductCategory> ProductCategories => Set<ProductCategory>();
+    public DbSet<Currency> Currencies => Set<Currency>();
 
     private readonly IConfiguration _configuration;
     private readonly IPasswordHasher<User> _passwordHasher;
 
     public AppDbContext(DbContextOptions<AppDbContext> options, IConfiguration configuration, IPasswordHasher<User> passwordHasher) : base(options)
     {
+        if (System.Diagnostics.Debugger.IsAttached == false)
+        {
+            System.Diagnostics.Debugger.Launch();
+        }
+
         _configuration = configuration;
         _passwordHasher = passwordHasher;
     }
@@ -29,5 +35,6 @@ public class AppDbContext : IdentityDbContext<User, Role, int>, IAppDbContext
         builder.ApplySingularizedSnakeCaseNamingConvention();
         builder.SeedRoles();
         builder.SeedUsers(_configuration, _passwordHasher);
+        builder.SeedCurrencies();
     }
 }

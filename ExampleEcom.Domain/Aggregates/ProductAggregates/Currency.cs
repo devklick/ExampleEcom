@@ -17,7 +17,7 @@ namespace ExampleEcom.Domain.Aggregates.ProductAggregates
         [Required, MinLength(3), MaxLength(3)]
         public string Number { get; set; } = default!;
 
-        [Required, StringLength(3)]
+        [Required, StringLength(5)]
         public string Symbol { get; set; } = default!;
 
         [Required]

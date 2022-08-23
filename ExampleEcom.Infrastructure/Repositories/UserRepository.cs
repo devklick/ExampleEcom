@@ -79,6 +79,13 @@ namespace ExampleEcom.Infrastructure.Users
             }
             else
             {
+                user.Roles = await _context.UserRoles
+                    .Where(ur => ur.UserId == user.Id)
+                    .Join(_context.Roles,
+                        userRole => userRole.RoleId,
+                        role => role.Id,
+                        (ur, r) => r).ToListAsync();
+
                 result.Success = true;
                 result.Data = user;
             }

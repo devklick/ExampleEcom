@@ -11,7 +11,7 @@ export interface FormFieldProps<FormDataType extends { [key: string]: any }> {
   formErrors: FieldErrorsImpl<{
     [x: string]: any;
   }>;
-  apiErrors: ApiResponseErrors;
+  apiErrors?: ApiResponseErrors;
   type?: HTMLInputTypeAttribute;
 }
 
@@ -24,12 +24,14 @@ const FormField = <TFormDataType extends { [key: string]: any }>({
   apiErrors,
 }: FormFieldProps<TFormDataType>) => {
   displayName = displayName ?? camelToTitle(fieldName);
-  const hasErrors = () => !!formErrors[fieldName] || !!apiErrors[fieldName];
-  const errorMessages = () =>
-    [
-      formErrors[fieldName]?.message?.toString(),
-      ...apiErrors[fieldName],
-    ].filter((v) => v);
+
+  const errorMessages: string[] = [];
+  const formFieldError = formErrors[fieldName]?.message?.toString();
+  if (formFieldError) errorMessages.push(formFieldError);
+  if (apiErrors && apiErrors[fieldName])
+    apiErrors[fieldName].forEach((e) => errorMessages.push(e));
+
+  const hasErrors = !!errorMessages.length;
 
   return (
     <div className={styles["form-field"]}>
@@ -37,12 +39,12 @@ const FormField = <TFormDataType extends { [key: string]: any }>({
       <input
         className={styles["form-field__input"]}
         {...register(fieldName)}
-        aria-invalid={hasErrors()}
+        aria-invalid={hasErrors}
         type={type}
       />
       {
         <p className={styles["form-field__input-errors"]}>
-          {hasErrors() && errorMessages()}
+          {hasErrors && errorMessages}
         </p>
       }
     </div>

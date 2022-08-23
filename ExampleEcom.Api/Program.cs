@@ -9,6 +9,8 @@ using ExampleEcom.Infrastructure.Persistence;
 using ExampleEcom.Infrastructure.Users;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using ExampleEcom.Domain.Aggregates.ProductAggregates;
+using ExampleEcom.Infrastructure.Repositories;
 
 namespace ExampleEcom.Api;
 
@@ -107,7 +109,9 @@ public class Program
 
     private static void AddRepositories(WebApplicationBuilder builder)
     {
-        builder.Services.AddScoped<IUserRepository, UserRepository>();
+        builder.Services
+            .AddScoped<IUserRepository, UserRepository>()
+            .AddScoped<IProductRepository, ProductRepository>();
     }
 
     private static WebApplication AddMiddlewares(WebApplication app)

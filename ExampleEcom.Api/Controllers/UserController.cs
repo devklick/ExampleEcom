@@ -35,9 +35,6 @@ namespace ExampleEcom.Api.Controllers
             var command = new UserLoginCommand(request);
             var response = await _mediator.Send(command);
             return CreateObjectResult(response);
-            await HttpContext.SignOutAsync();
         }
-
-
     }
 }

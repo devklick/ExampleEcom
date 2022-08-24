@@ -3,7 +3,7 @@ using ExampleEcom.Domain.Aggregates.UserAggregates;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
-namespace ExampleEcom.Domain.Context
+namespace ExampleEcom.Domain.Persistence
 {
     public interface IAppDbContext
     {

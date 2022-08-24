@@ -1,6 +1,6 @@
 using ExampleEcom.Domain.Aggregates.ProductAggregates;
 using ExampleEcom.Domain.Common;
-using ExampleEcom.Domain.Context;
+using ExampleEcom.Domain.Persistence;
 
 namespace ExampleEcom.Infrastructure.Repositories
 {

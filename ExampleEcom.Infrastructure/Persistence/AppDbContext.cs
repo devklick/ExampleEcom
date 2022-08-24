@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using ExampleEcom.Domain.Aggregates.ProductAggregates;
 using ExampleEcom.Domain.Aggregates.UserAggregates;
-using ExampleEcom.Domain.Context;
+using ExampleEcom.Domain.Persistence;
 using ExampleEcom.Infrastructure.Persistence.Extensions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Identity;

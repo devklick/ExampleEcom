@@ -1,6 +1,6 @@
 using ExampleEcom.Domain.Aggregates.UserAggregates;
 using ExampleEcom.Domain.Common;
-using ExampleEcom.Domain.Context;
+using ExampleEcom.Domain.Persistence;
 using ExampleEcom.Domain.Repository;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;

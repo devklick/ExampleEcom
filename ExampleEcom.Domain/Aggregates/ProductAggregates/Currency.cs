@@ -1,8 +1,10 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
 namespace ExampleEcom.Domain.Aggregates.ProductAggregates
 {
+    [Index(nameof(Code), IsUnique = true)]
     public class Currency
     {
         [Required]

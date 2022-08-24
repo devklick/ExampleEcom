@@ -1,7 +1,7 @@
 using System.Reflection;
 using ExampleEcom.Domain.Aggregates.UserAggregates;
 using ExampleEcom.Domain.Configuration;
-using ExampleEcom.Domain.Context;
+using ExampleEcom.Domain.Persistence;
 using ExampleEcom.Domain.Repository;
 using ExampleEcom.Infrastructure.Crypto.Jwt;
 using ExampleEcom.Api.Middleware;

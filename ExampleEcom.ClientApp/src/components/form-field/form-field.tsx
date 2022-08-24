@@ -1,9 +1,16 @@
-import { HTMLInputTypeAttribute } from "react";
+import { HTMLInputTypeAttribute, useState } from "react";
 import { FieldErrorsImpl, FieldValues, UseFormRegister } from "react-hook-form";
-import Select from "react-select/dist/declarations/src/Select";
+import Select from "react-select";
 import { ApiResponseErrors } from "../../schemas/base-api-schema";
 import { camelToTitle } from "../../utilities/string-utilities";
 import styles from "./form-field.module.scss";
+
+export type FormFieldType = HTMLInputTypeAttribute | "searchable-select";
+
+export type SelectableItem = {
+  value: string;
+  label: string;
+};
 
 export interface FormFieldProps<FormDataType extends { [key: string]: any }> {
   fieldName: keyof FormDataType & string;
@@ -13,17 +20,9 @@ export interface FormFieldProps<FormDataType extends { [key: string]: any }> {
     [x: string]: any;
   }>;
   apiErrors?: ApiResponseErrors;
-  type?: HTMLInputTypeAttribute | "creatable-select";
+  type?: FormFieldType;
+  selectableItems?: SelectableItem[];
 }
-
-const isHTMLInputTypeAttribute = (
-  type: unknown
-): type is HTMLInputTypeAttribute => {
-  return (
-    typeof type === "string" &&
-    typeof (type as HTMLInputTypeAttribute) !== "undefined"
-  );
-};
 
 const FormField = <TFormDataType extends { [key: string]: any }>({
   fieldName,
@@ -32,8 +31,11 @@ const FormField = <TFormDataType extends { [key: string]: any }>({
   type = "text",
   displayName,
   apiErrors,
+  selectableItems = [],
 }: FormFieldProps<TFormDataType>) => {
   displayName = displayName ?? camelToTitle(fieldName);
+
+  const [selected, setSelected] = useState<SelectableItem | null>(null);
 
   const errorMessages: string[] = [];
   const formFieldError = formErrors[fieldName]?.message?.toString();
@@ -44,26 +46,28 @@ const FormField = <TFormDataType extends { [key: string]: any }>({
   const hasErrors = !!errorMessages.length;
 
   const renderField = () => {
-    if (isHTMLInputTypeAttribute(type)) {
+    if (type === "searchable-select") {
       return (
-        <input
-          className={styles["form-field__input"]}
-          {...register(fieldName)}
-          aria-invalid={hasErrors}
-          type={type}
+        <Select<SelectableItem>
+          value={selected}
+          getOptionLabel={(item) => item.label}
+          getOptionValue={(animal) => animal.value}
+          options={selectableItems}
+          isClearable={true}
+          backspaceRemovesValue={true}
+          onChange={(option) => setSelected(option)}
         />
       );
     }
-    // otherwise creatable select list
-    const options = [
-      { value: "chocolate", label: "Chocolate" },
-      { value: "strawberry", label: "Strawberry" },
-      { value: "vanilla", label: "Vanilla" },
-    ];
 
-    // const MyComponent = () => (
-    //   <Select options={options} />
-    // )
+    return (
+      <input
+        className={styles["form-field__input"]}
+        {...register(fieldName)}
+        aria-invalid={hasErrors}
+        type={type}
+      />
+    );
   };
 
   return (

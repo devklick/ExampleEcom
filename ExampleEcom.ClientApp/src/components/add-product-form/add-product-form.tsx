@@ -18,7 +18,10 @@ import {
   createProductSchema,
   GetCurrenciesResponse,
 } from "../../schemas/product-schema";
-import FormField from "../form-field/form-field";
+import FormField, {
+  FormFieldType,
+  SelectableItem,
+} from "../form-field/form-field";
 
 import styles from "./add-product.form.module.scss";
 import productService from "../../services/ecom-product-api-service";
@@ -27,13 +30,22 @@ export interface AddProductFormProps {}
 
 const AddProductForm: React.FC<AddProductFormProps> = () => {
   const imageUrlsRef = useRef<string[]>([]);
-  const [currencies, setCurrencies] = useState<GetCurrenciesResponse>([]);
+  const [selectableCurrencies, setSelectableCurrencies] = useState<
+    SelectableItem[]
+  >([]);
 
   useEffect(() => {
     const getCurrenciesAsync = async () => {
       var currencies = await productService.getCurrencies();
       if (currencies.statusType === "success") {
-        setCurrencies(currencies.value);
+        setSelectableCurrencies(
+          currencies.value.map(
+            (c): SelectableItem => ({
+              label: `${c.code} | ${c.name} (${c.symbol})`,
+              value: c.code,
+            })
+          )
+        );
       }
     };
     getCurrenciesAsync();
@@ -63,7 +75,8 @@ const AddProductForm: React.FC<AddProductFormProps> = () => {
 
   const formField = (
     fieldName: keyof CreateProductSchema,
-    type: HTMLInputTypeAttribute = "text"
+    type: FormFieldType = "text",
+    selectableItems: SelectableItem[] = []
   ) => (
     <FormField<CreateProductSchema>
       fieldName={fieldName}
@@ -71,6 +84,7 @@ const AddProductForm: React.FC<AddProductFormProps> = () => {
       register={register}
       formErrors={errors}
       apiErrors={apiErrors}
+      selectableItems={selectableItems}
     />
   );
 
@@ -97,20 +111,10 @@ const AddProductForm: React.FC<AddProductFormProps> = () => {
           <div className={styles["add-product-form-content__form-fields"]}>
             {formField("name")}
             {formField("categories")}
-            {formField("prices")}
+            {formField("prices", "searchable-select", selectableCurrencies)}
           </div>
           <FileUpload onFileUploaded={onFileUploaded}></FileUpload>
         </Form>
-        {currencies.map((c) => (
-          <>
-            <span>{c.code}</span>
-            <span>{c.name}</span>
-            <span>{c.number}</span>
-            <span>{c.spacedSymbol}</span>
-            <span>{c.symbol}</span>
-            <span>{c.symbolOrientation}</span>
-          </>
-        ))}
       </ContentContainer>
     </div>
   );

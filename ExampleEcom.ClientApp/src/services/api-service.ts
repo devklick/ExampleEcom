@@ -46,8 +46,6 @@ const executeRequest = async <TResponse>(
   };
   const response = await proxy.request<ApiResponse<TResponse>>(requestConfig);
 
-  console.log(response);
-
   const statusType = getApiResponseStatus(response.status);
 
   return {

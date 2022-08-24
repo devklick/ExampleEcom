@@ -5,12 +5,14 @@ interface UserContextData {
   user: User | null;
   setUser: (user: User) => void;
   isSiteAdmin: () => boolean;
+  cacheLoaded: boolean;
 }
 
 const defaultUserContextData: UserContextData = {
   user: null,
   setUser: () => null,
   isSiteAdmin: () => false,
+  cacheLoaded: false,
 };
 
 const UserContext = createContext<UserContextData>(defaultUserContextData);

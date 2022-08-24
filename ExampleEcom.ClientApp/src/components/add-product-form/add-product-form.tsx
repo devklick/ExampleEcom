@@ -1,10 +1,4 @@
-import React, {
-  HTMLInputTypeAttribute,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import UserContext from "../../context/user-context";
@@ -16,7 +10,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import {
   CreateProductSchema,
   createProductSchema,
-  GetCurrenciesResponse,
 } from "../../schemas/product-schema";
 import FormField, {
   FormFieldType,
@@ -29,16 +22,27 @@ import productService from "../../services/ecom-product-api-service";
 export interface AddProductFormProps {}
 
 const AddProductForm: React.FC<AddProductFormProps> = () => {
+  const { isSiteAdmin, cacheLoaded } = useContext(UserContext);
+  const navigate = useNavigate();
+
   const imageUrlsRef = useRef<string[]>([]);
-  const [selectableCurrencies, setSelectableCurrencies] = useState<
-    SelectableItem[]
-  >([]);
+  const [apiErrors, setErrors] = useState<ApiResponseErrors>({});
+  const [categories, setCategories] = useState<string[]>([]);
+
+  const [currencies, setCurrencies] = useState<SelectableItem[]>([]);
+
+  useEffect(() => {
+    if (cacheLoaded && !isSiteAdmin()) {
+      navigate("/");
+    }
+    //eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [cacheLoaded, isSiteAdmin]);
 
   useEffect(() => {
     const getCurrenciesAsync = async () => {
       var currencies = await productService.getCurrencies();
       if (currencies.statusType === "success") {
-        setSelectableCurrencies(
+        setCurrencies(
           currencies.value.map(
             (c): SelectableItem => ({
               label: `${c.code} | ${c.name} (${c.symbol})`,
@@ -50,15 +54,6 @@ const AddProductForm: React.FC<AddProductFormProps> = () => {
     };
     getCurrenciesAsync();
   }, []);
-
-  const [apiErrors, setErrors] = useState<ApiResponseErrors>({});
-  const { isSiteAdmin } = useContext(UserContext);
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    // if (!isSiteAdmin()) navigate("/");
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isSiteAdmin]);
 
   const {
     register,
@@ -111,7 +106,7 @@ const AddProductForm: React.FC<AddProductFormProps> = () => {
           <div className={styles["add-product-form-content__form-fields"]}>
             {formField("name")}
             {formField("categories")}
-            {formField("prices", "searchable-select", selectableCurrencies)}
+            {formField("prices", "searchable-select", currencies)}
           </div>
           <FileUpload onFileUploaded={onFileUploaded}></FileUpload>
         </Form>

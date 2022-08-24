@@ -1,0 +1,11 @@
+.add-product-form__categories {
+    &-field-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    &-add {
+        width: 100%;
+        height: 20px;
+    }
+}

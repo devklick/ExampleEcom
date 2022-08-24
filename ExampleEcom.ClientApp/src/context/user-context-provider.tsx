@@ -27,12 +27,14 @@ const UserContextProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const [user, setUser] = useState<User | null>(null);
+  const [cacheLoaded, setCacheLoaded] = useState(false);
 
   const isSiteAdmin = () =>
     (user && user.roles.includes(UserRole.SiteAdmin)) ?? false;
 
   useEffect(() => {
     getLocalData(StoredDataType.User, setUser);
+    setCacheLoaded(true);
   }, []);
 
   useEffect(() => {
@@ -40,7 +42,7 @@ const UserContextProvider: React.FC<{ children: React.ReactNode }> = ({
   }, [user]);
 
   return (
-    <UserContext.Provider value={{ user, setUser, isSiteAdmin }}>
+    <UserContext.Provider value={{ user, setUser, isSiteAdmin, cacheLoaded }}>
       {children}
     </UserContext.Provider>
   );

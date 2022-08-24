@@ -6,9 +6,21 @@ type PostOptions = {
   body?: object;
 };
 
-type RequestOptions = PostOptions & {
-  queryParameters?: object;
-  headers?: Record<string, string | number | boolean>;
+type GetOptions = {
+  endpoint?: string;
+  queryParams?: object;
+};
+
+type RequestOptions = GetOptions &
+  PostOptions & {
+    headers?: Record<string, string | number | boolean>;
+  };
+
+const get = async <TResponseBody>(
+  proxy: AxiosInstance,
+  options: GetOptions
+): Promise<ApiResponse<TResponseBody>> => {
+  return await executeRequest<TResponseBody>(proxy, "get", options);
 };
 
 const post = async <TResponseBody>(
@@ -27,7 +39,7 @@ const executeRequest = async <TResponse>(
 ): Promise<ApiResponse<TResponse>> => {
   const requestConfig: AxiosRequestConfig = {
     method,
-    url: buildUrl(options.endpoint, options.queryParameters),
+    url: buildUrl(options.endpoint, options.queryParams),
     data: options.body,
     headers: options.headers,
     responseType: "json",
@@ -71,6 +83,7 @@ const buildQueryString = (urlParams: object | undefined) =>
     : "";
 
 const apiService = {
+  get,
   post,
 };
 

@@ -11,8 +11,7 @@ namespace ExampleEcom.Api.Products.Responses
         public CurrencySymbolOrientation SymbolOrientation { get; set; }
         public bool SpacedSymbol { get; set; }
     }
-    public class GetCurrenciesResponse
+    public class GetCurrenciesResponse : List<GetCurrenciesResponseItem>
     {
-        public List<GetCurrenciesResponseItem> Currencies { get; set; } = new List<GetCurrenciesResponseItem>();
     }
 }

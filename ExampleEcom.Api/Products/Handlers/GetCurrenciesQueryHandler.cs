@@ -25,10 +25,7 @@ namespace ExampleEcom.Api.Products.Handlers
             var response = new ApiResponse<GetCurrenciesResponse>
             {
                 StatusCode = currencies.Success ? 200 : 500,
-                Value = currencies.Data == null ? null : new GetCurrenciesResponse
-                {
-                    Currencies = _mapper.Map<List<Currency>, List<GetCurrenciesResponseItem>>(currencies.Data),
-                }
+                Value = currencies.Data == null ? null : _mapper.Map<List<Currency>, GetCurrenciesResponse>(currencies.Data),
             };
 
             if (!currencies.Success)

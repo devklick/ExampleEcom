@@ -1,3 +1,4 @@
+import { type } from "os";
 import { z } from "zod";
 
 export const productPrice = z.object({
@@ -13,4 +14,30 @@ export const createProductSchema = z.object({
   prices: z.array(productPrice),
 });
 
+const CurrencySymbolOrientation = {
+  BeforeValue: "BeforeValue",
+  AfterValue: "AfterValue",
+} as const;
+
+const currencySymbolOrientations = z.nativeEnum(CurrencySymbolOrientation);
+
+const getCurrenciesRequestSchema = z.object({
+  search: z.string().optional(),
+});
+const getCurrenciesResponseSchema = z.array(
+  z.object({
+    name: z.string(),
+    code: z.string(),
+    number: z.string(),
+    symbol: z.string(),
+    symbolOrientation: currencySymbolOrientations,
+    spacedSymbol: z.boolean(),
+  })
+);
+
 export type CreateProductSchema = z.infer<typeof createProductSchema>;
+export type GetCurrenciesRequest = z.infer<typeof getCurrenciesRequestSchema>;
+export type GetCurrenciesResponse = z.infer<typeof getCurrenciesResponseSchema>;
+export type CurrencySymbolOrientations = z.infer<
+  typeof currencySymbolOrientations
+>;

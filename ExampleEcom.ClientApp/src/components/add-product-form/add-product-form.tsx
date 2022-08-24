@@ -3,7 +3,7 @@ import React, {
   useContext,
   useEffect,
   useRef,
-  useState
+  useState,
 } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
@@ -15,32 +15,45 @@ import Form from "../form/form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   CreateProductSchema,
-  createProductSchema
+  createProductSchema,
+  GetCurrenciesResponse,
 } from "../../schemas/product-schema";
 import FormField from "../form-field/form-field";
 
 import styles from "./add-product.form.module.scss";
+import productService from "../../services/ecom-product-api-service";
 
 export interface AddProductFormProps {}
 
 const AddProductForm: React.FC<AddProductFormProps> = () => {
   const imageUrlsRef = useRef<string[]>([]);
+  const [currencies, setCurrencies] = useState<GetCurrenciesResponse>([]);
+
+  useEffect(() => {
+    const getCurrenciesAsync = async () => {
+      var currencies = await productService.getCurrencies();
+      if (currencies.statusType === "success") {
+        setCurrencies(currencies.value);
+      }
+    };
+    getCurrenciesAsync();
+  }, []);
 
   const [apiErrors, setErrors] = useState<ApiResponseErrors>({});
   const { isSiteAdmin } = useContext(UserContext);
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!isSiteAdmin()) navigate("/");
+    // if (!isSiteAdmin()) navigate("/");
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSiteAdmin]);
 
   const {
     register,
     handleSubmit,
-    formState: { errors }
+    formState: { errors },
   } = useForm({
-    resolver: zodResolver(createProductSchema)
+    resolver: zodResolver(createProductSchema),
   });
 
   const handleSubmitRegistration = async (request: CreateProductSchema) => {
@@ -77,7 +90,8 @@ const AddProductForm: React.FC<AddProductFormProps> = () => {
           submitButtonClassName={styles["add-product-form__form-submit"]}
           submitButtonText="Submit registration"
           onSubmit={handleSubmit(
-            async d => await handleSubmitRegistration(d as CreateProductSchema)
+            async (d) =>
+              await handleSubmitRegistration(d as CreateProductSchema)
           )}
         >
           <div className={styles["add-product-form-content__form-fields"]}>
@@ -87,6 +101,16 @@ const AddProductForm: React.FC<AddProductFormProps> = () => {
           </div>
           <FileUpload onFileUploaded={onFileUploaded}></FileUpload>
         </Form>
+        {currencies.map((c) => (
+          <>
+            <span>{c.code}</span>
+            <span>{c.name}</span>
+            <span>{c.number}</span>
+            <span>{c.spacedSymbol}</span>
+            <span>{c.symbol}</span>
+            <span>{c.symbolOrientation}</span>
+          </>
+        ))}
       </ContentContainer>
     </div>
   );

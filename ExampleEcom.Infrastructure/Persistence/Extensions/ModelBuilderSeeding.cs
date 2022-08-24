@@ -286,7 +286,7 @@ namespace ExampleEcom.Infrastructure.Persistence.Extensions
                 // Z
                 new Currency { Name = "South African rand", Code = "ZAR", Symbol = "R", SymbolOrientation = CurrencySymbolOrientation.BeforeValue, Number = "0", Id = 83, SpacedSymbol = false },
                 new Currency { Name = "Zambian kwacha", Code = "ZMW", Symbol = "ZK", SymbolOrientation = CurrencySymbolOrientation.BeforeValue, Number = "0", Id = 264, SpacedSymbol = false },
-                new Currency { Name = "RTGS dollar", Code = "ZWB", Symbol = "RTGS$", SymbolOrientation = CurrencySymbolOrientation.BeforeValue, Number = "0", Id = 265, SpacedSymbol = false }
+                new Currency { Name = "RTGS dollar", Code = "ZWB", Symbol = "RTGS$", SymbolOrientation = CurrencySymbolOrientation.BeforeValue, Number = "0", Id = 265, SpacedSymbol = false },
 
                 // ?
                 new Currency { Name = "Abkhazian apsar", Code = "???", Symbol = "?", SymbolOrientation = CurrencySymbolOrientation.BeforeValue, Number = "0", Id = 1, SpacedSymbol = false },
@@ -294,7 +294,7 @@ namespace ExampleEcom.Infrastructure.Persistence.Extensions
                 new Currency { Name = "Artsakh dram", Code = "???", Symbol = "դր.", SymbolOrientation = CurrencySymbolOrientation.BeforeValue, Number = "0", Id = 15, SpacedSymbol = false },
                 new Currency { Name = "Niue dollar", Code = "???", Symbol = "$", SymbolOrientation = CurrencySymbolOrientation.BeforeValue, Number = "0", Id = 177, SpacedSymbol = false },
                 new Currency { Name = "Sahrawi peseta", Code = "???", Symbol = "Ptas", SymbolOrientation = CurrencySymbolOrientation.BeforeValue, Number = "0", Id = 204, SpacedSymbol = false },
-            }
+            };
             builder.Entity<Currency>().HasData(currencies.OrderBy(c => c.Code));
         }
     }

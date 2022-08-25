@@ -56,7 +56,7 @@ const RegistrationForm: React.FC<UserRegistrationProps> = () => {
 
   return (
     <div className={styles["user-registration"]}>
-      <ContentContainer>
+      <ContentContainer width="regular">
         <h1 className={styles["user-registration-content__header"]}>
           User Registration
         </h1>

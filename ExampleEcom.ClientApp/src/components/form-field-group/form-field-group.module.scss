@@ -1,0 +1,23 @@
+.form-field-group {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+
+    &__label {
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+
+    &__fields-container {
+        &__left-right {
+            display: flex;
+            flex-direction: row;
+            gap: 10px;
+        }
+        &__top-bottom {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+    }
+}

@@ -65,7 +65,7 @@ const LoginForm: React.FC<LoginFormProps> = () => {
 
   return (
     <div className={styles["login-form"]}>
-      <ContentContainer>
+      <ContentContainer width="regular">
         <h1 className={styles["login-form-content__header"]}>User Login</h1>
 
         <Form

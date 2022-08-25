@@ -7,7 +7,9 @@ const AppHeader: React.FC<AppHeaderProps> = (props) => {
     <>
       <div className={styles["app-header"]}>
         <div className={styles["app-header__content"]}>
-          <div className={styles["app-header__content__title"]}>Ex-Ecom</div>
+          <div className={styles["app-header__content__title"]}>
+            Example Ecom
+          </div>
         </div>
       </div>
       <NavBar />

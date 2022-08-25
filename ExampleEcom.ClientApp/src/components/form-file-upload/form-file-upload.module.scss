@@ -1,0 +1,33 @@
+.form-file-upload {
+    display: flex;
+    flex-direction: column;
+
+    &__field-label {
+        text-align: left;
+    }
+
+    &__images-container {
+        margin-top: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: 1px solid grey;
+        border-radius: 4px;
+        padding: 10px;
+        gap: 10px;
+    }
+
+    &__input-errors {
+        color: red;
+        text-align: left;
+    }
+
+    &__upload-button {
+        height: 30px;
+    }
+
+    &__image {
+        height: 100%;
+        width: 100%;
+    }
+}

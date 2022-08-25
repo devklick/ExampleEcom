@@ -1,7 +1,6 @@
-import { type } from "os";
 import { z } from "zod";
 
-export const productPrice = z.object({
+export const productPriceSchema = z.object({
   value: z.number().positive(),
   currency: z.string().length(3),
 });
@@ -11,7 +10,8 @@ export const productCategoryPath = z.array(z.string());
 export const createProductSchema = z.object({
   name: z.string().min(3).max(64),
   categories: z.array(productCategoryPath),
-  prices: z.array(productPrice),
+  prices: z.array(productPriceSchema),
+  imageDataUrls: z.array(z.string()),
 });
 
 const CurrencySymbolOrientation = {
@@ -41,3 +41,5 @@ export type GetCurrenciesResponse = z.infer<typeof getCurrenciesResponseSchema>;
 export type CurrencySymbolOrientations = z.infer<
   typeof currencySymbolOrientations
 >;
+
+export type ProductPrice = z.infer<typeof productPriceSchema>;

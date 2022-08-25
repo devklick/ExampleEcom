@@ -1,11 +1,15 @@
 import { HTMLInputTypeAttribute, useState } from "react";
 import { FieldErrorsImpl, FieldValues, UseFormRegister } from "react-hook-form";
 import Select from "react-select";
+import CreatableSelect from "react-select/creatable";
 import { ApiResponseErrors } from "../../schemas/base-api-schema";
 import { camelToTitle } from "../../utilities/string-utilities";
 import styles from "./form-field.module.scss";
 
-export type FormFieldType = HTMLInputTypeAttribute | "searchable-select";
+export type FormFieldType =
+  | HTMLInputTypeAttribute
+  | "searchable-select"
+  | "creatable-select-multiple";
 
 export type SelectableItem = {
   value: string;
@@ -22,6 +26,8 @@ export interface FormFieldProps<FormDataType extends { [key: string]: any }> {
   apiErrors?: ApiResponseErrors;
   type?: FormFieldType;
   selectableItems?: SelectableItem[];
+  onChange?: (newValue: unknown) => void;
+  step?: number;
 }
 
 const FormField = <TFormDataType extends { [key: string]: any }>({
@@ -32,10 +38,14 @@ const FormField = <TFormDataType extends { [key: string]: any }>({
   displayName,
   apiErrors,
   selectableItems = [],
+  onChange,
+  step,
 }: FormFieldProps<TFormDataType>) => {
   displayName = displayName ?? camelToTitle(fieldName);
 
-  const [selected, setSelected] = useState<SelectableItem | null>(null);
+  const [selected, setSelected] = useState<
+    SelectableItem | SelectableItem[] | null
+  >(null);
 
   const errorMessages: string[] = [];
   const formFieldError = formErrors[fieldName]?.message?.toString();
@@ -55,7 +65,20 @@ const FormField = <TFormDataType extends { [key: string]: any }>({
           options={selectableItems}
           isClearable={true}
           backspaceRemovesValue={true}
-          onChange={(option) => setSelected(option)}
+          onChange={(option) => {
+            setSelected(option);
+            onChange && onChange(option);
+          }}
+        />
+      );
+    } else if (type === "creatable-select-multiple") {
+      return (
+        <CreatableSelect<SelectableItem, true>
+          isMulti
+          onChange={(options) => {
+            setSelected(options as SelectableItem[]);
+            onChange && onChange(options);
+          }}
         />
       );
     }
@@ -65,7 +88,11 @@ const FormField = <TFormDataType extends { [key: string]: any }>({
         className={styles["form-field__input"]}
         {...register(fieldName)}
         aria-invalid={hasErrors}
+        onChange={(newValue) =>
+          onChange && onChange(newValue.currentTarget.value)
+        }
         type={type}
+        step={step}
       />
     );
   };

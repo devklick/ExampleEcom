@@ -13,6 +13,11 @@
         width: 300px;
     }
 
+    &-large {
+        @extend .content-container;
+        width: 700px;
+    }
+
     h1 {
         color: black;
     }
